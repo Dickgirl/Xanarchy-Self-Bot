@@ -1,6 +1,6 @@
 class SELFBOT():
     __linecount__ = 1933
-    __version__ = 4.0
+    __version__ = 4.1
      
 import discord, subprocess, sys, time, os, colorama, base64, codecs, datetime, io, random, numpy, datetime, smtplib, string, ctypes
 import urllib.parse, urllib.request, re, json, requests, webbrowser, aiohttp, dns.name, asyncio, functools, logging
@@ -1974,6 +1974,15 @@ async def xell(ctx): # b'\xfc'
     await ctx.message.delete()
     xell = 'FUCK THE UK'
     await ctx.send(xell)
+    
+@Xanarchy.command()
+async def mys(ctx, amount: int): # b'\xfc'
+    await ctx.message.delete()  
+    mys = 'https://imgur.com/UKQfeqt'
+    mys1 = '#BEPARANOID'
+    for _i in range(amount):
+        await ctx.send(mys)
+        await ctx.send(mys1)
     
 @Xanarchy.command()
 async def fuckoff(ctx): # b'\xfc'
