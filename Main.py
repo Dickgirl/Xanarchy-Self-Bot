@@ -1,6 +1,6 @@
 class SELFBOT():
     __linecount__ = 1933
-    __version__ = 3.5
+    __version__ = 4.0
      
 import discord, subprocess, sys, time, os, colorama, base64, codecs, datetime, io, random, numpy, datetime, smtplib, string, ctypes
 import urllib.parse, urllib.request, re, json, requests, webbrowser, aiohttp, dns.name, asyncio, functools, logging
@@ -1623,11 +1623,20 @@ async def yuri(ctx): # b'\xfc'
     em = discord.Embed()
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
+
+@Xanarchy.command()
+async def waifu(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/waifu")
+    res = r.json()
+    em = discord.Embed()
+    em.set_image(url=res['url'])
+    await ctx.send(embed=em)
     
 @Xanarchy.command()
 async def pfpgen(ctx): # b'\xfc'
     await ctx.message.delete()
-    r = requests.get("https://nekos.life/api/v2/img/waifu")
+    r = requests.get("https://nekos.life/api/v2/img/avatar")
     res = r.json()
     em = discord.Embed()
     em.set_image(url=res['url'])
@@ -1653,9 +1662,36 @@ async def hentai(ctx): # b'\xfc'
     await ctx.send(embed=em)   
 
 @Xanarchy.command()
+async def neko(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/neko")
+    res = r.json()
+    em = discord.Embed()
+    em.set_image(url=res['url'])
+    await ctx.send(embed=em)   
+
+@Xanarchy.command()
+async def wallpaper(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/wallpaper")
+    res = r.json()
+    em = discord.Embed()
+    em.set_image(url=res['url'])
+    await ctx.send(embed=em)   
+    
+@Xanarchy.command()
 async def boobs(ctx): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/boobs")
+    res = r.json()
+    em = discord.Embed()
+    em.set_image(url=res['url'])
+    await ctx.send(embed=em)
+    
+@Xanarchy.command()
+async def nsfwpfp(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://nekos.life/api/v2/img/nsfw_avatar")
     res = r.json()
     em = discord.Embed()
     em.set_image(url=res['url'])
@@ -1742,6 +1778,15 @@ async def smug(ctx, user: discord.Member): # b'\xfc'
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
 
+@Xanarchy.command()
+async def meme(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://some-random-api.ml/meme")
+    res = r.json()
+    em = discord.Embed(description=res['caption'])
+    em.set_image(url=res['image'])
+    await ctx.send(embed=em)
+    
 @Xanarchy.command()
 async def pat(ctx, user: discord.Member): # b'\xfc'
     await ctx.message.delete()
