@@ -1,6 +1,8 @@
 # Xanarchy-Self-Bot
 just a self bot 
 
+to run the self bot run Xanarchy.exe
+
 commands
 https://www.exxploiting.com/commands/
 
