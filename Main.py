@@ -1,6 +1,6 @@
 class SELFBOT():
     __linecount__ = 1933
-    __version__ = 4.1
+    __version__ = 5
      
 import discord, subprocess, sys, time, os, colorama, base64, codecs, datetime, io, random, numpy, datetime, smtplib, string, ctypes
 import urllib.parse, urllib.request, re, json, requests, webbrowser, aiohttp, dns.name, asyncio, functools, logging
@@ -1788,6 +1788,61 @@ async def meme(ctx): # b'\xfc'
     await ctx.send(embed=em)
     
 @Xanarchy.command()
+async def ffdog(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://some-random-api.ml/facts/dog")
+    res = r.json()
+    em = discord.Embed(description=res['fact'])
+    r = requests.get("https://some-random-api.ml/img/dog")
+    res = r.json()
+    em.set_image(url=res['link'])
+    await ctx.send(embed=em)
+
+@Xanarchy.command()
+async def ffcat(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://some-random-api.ml/facts/cat")
+    res = r.json()
+    em = discord.Embed(description=res['fact'])
+    r = requests.get("https://some-random-api.ml/img/cat")
+    res = r.json()
+    em.set_image(url=res['link'])
+    await ctx.send(embed=em)
+
+@Xanarchy.command()
+async def ffpanda(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://some-random-api.ml/facts/panda")
+    res = r.json()
+    em = discord.Embed(description=res['fact'])
+    r = requests.get("https://some-random-api.ml/img/panda")
+    res = r.json()
+    em.set_image(url=res['link'])
+    await ctx.send(embed=em)
+
+@Xanarchy.command()
+async def fffox(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://some-random-api.ml/facts/fox")
+    res = r.json()
+    em = discord.Embed(description=res['fact'])
+    r = requests.get("https://some-random-api.ml/img/fox")
+    res = r.json()
+    em.set_image(url=res['link'])
+    await ctx.send(embed=em)
+    
+@Xanarchy.command()
+async def ffkoala(ctx): # b'\xfc'
+    await ctx.message.delete()
+    r = requests.get("https://some-random-api.ml/facts/koala")
+    res = r.json()
+    em = discord.Embed(description=res['fact'])
+    r = requests.get("https://some-random-api.ml/img/koala")
+    res = r.json()
+    em.set_image(url=res['link'])
+    await ctx.send(embed=em)
+
+@Xanarchy.command()
 async def pat(ctx, user: discord.Member): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/pat")
@@ -1795,7 +1850,7 @@ async def pat(ctx, user: discord.Member): # b'\xfc'
     em = discord.Embed(description=user.mention)
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
-
+    
 @Xanarchy.command()
 async def kiss(ctx, user: discord.Member): # b'\xfc'
     await ctx.message.delete()
@@ -2007,6 +2062,12 @@ async def hacked(ctx): # b'\xfc'
     await ctx.message.delete()
     hacked = 'https://imgur.com/UKQfeqt'
     await ctx.send(hacked)
+
+@Xanarchy.command()
+async def sniper(ctx): # b'\xfc'
+    await ctx.message.delete()
+    sniper = 'https://imgur.com/Fn5Oh8v'
+    await ctx.send(sniper)
 
 @Xanarchy.command()
 async def happyre(ctx): # b'\xfc'
