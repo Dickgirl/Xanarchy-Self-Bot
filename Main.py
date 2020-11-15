@@ -317,6 +317,22 @@ class Edit:
 
             requests.patch(f'https://discordapp.com/api/v6/channels/{self.channel_id}/messages/{message_id}', headers=self.headers, json={'content': ' ' + message})
 
+class MaskMessage:
+
+    def __init__(self, channel, message, hidden_message):
+        self.channel_id = channel
+        self.message = message
+        self.hidden_message = hidden_message
+        self.headers = {'Authorization': token}
+
+    def _generate_message(self, m1, m2):
+        """ generate masked message inside message using strange unicode/spoiler bug """
+        return m1 + ('||\u200b||' * 200) + m2
+
+    def execute(self):
+        """ send masked message """
+        return requests.post(f'https://discordapp.com/api/v6/channels/{self.channel_id}/messages', headers=self.headers, json={'content': self._generate_message(self.message, self.hidden_message)})
+
 colorama.init()
 Xanarchy = discord.Client()
 Xanarchy = commands.Bot(
@@ -519,6 +535,19 @@ async def edit(ctx, *, message):
 
     exploit = Edit(ctx.message.channel.id, message)
     exploit.execute()
+
+@Xanarchy.command()
+async def mask(ctx, *, message):
+    await ctx.message.delete()
+
+    try:
+        msg = message.split(", ")[0]
+        hidden_msg = message.split(", ")[1]
+
+        exploit = MaskMessage(ctx.message.channel.id, msg, hidden_msg)
+        exploit.execute()
+    except:
+        pass
 
 @Xanarchy.command()
 async def genname(ctx): # b'\xfc'
