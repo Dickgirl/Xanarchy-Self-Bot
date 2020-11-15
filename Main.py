@@ -148,12 +148,9 @@ def startprint():
                        {Fore.RED}Giveaway Sniper | {Fore.WHITE}{giveaway}
                        {Fore.RED}SlotBot Sniper | {Fore.WHITE}{slotbot}
                        {Fore.RED}Prefix: {Fore.WHITE}{prefix}
-                       {Fore.RED}Creator: {Fore.WHITE}Exxploiting#0001
+                       {Fore.RED}Creator: {Fore.WHITE}Exxploiting#0003 and ucosus (Ethan)#9865
                        {Fore.RED}Website: {Fore.WHITE}https://www.exxploiting.com
                        
-                       
-                       {Fore.RED}Beta Tester's: 
-                        {Fore.WHITE}Xell#0001
     '''+Fore.RESET)
 
 def Clear():
