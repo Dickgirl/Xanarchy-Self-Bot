@@ -148,7 +148,7 @@ def startprint():
                        {Fore.RED}Giveaway Sniper | {Fore.WHITE}{giveaway}
                        {Fore.RED}SlotBot Sniper | {Fore.WHITE}{slotbot}
                        {Fore.RED}Prefix: {Fore.WHITE}{prefix}
-                       {Fore.RED}Creator: {Fore.WHITE}Exxploiting#0003 and ucosus (Ethan)#9865
+                       {Fore.RED}Creator: {Fore.WHITE}Exxploiting#0003 and Lucosus (Ethan)#9865
                        {Fore.RED}Website: {Fore.WHITE}https://www.exxploiting.com
                        
     '''+Fore.RESET)
@@ -296,6 +296,26 @@ def RandomColor():
 
 def RandString():
     return "".join(random.choice(string.ascii_letters + string.digits) for i in range(random.randint(14, 32)))
+
+class Edit:
+
+    MAGIC_CHAR = '\u202b'
+
+    def __init__(self, channel_id, message):
+        self.channel_id = channel_id
+        self.message = message
+        self.headers = {'Authorization': token}
+
+    def execute(self):
+        """ do the magik """
+        message = f'{self.MAGIC_CHAR} {self.message} {self.MAGIC_CHAR}'
+
+        res = requests.post(f'https://discordapp.com/api/v6/channels/{self.channel_id}/messages', headers=self.headers, json={'content': message})
+
+        if res.status_code == 200:
+            message_id = res.json()['id']
+
+            requests.patch(f'https://discordapp.com/api/v6/channels/{self.channel_id}/messages/{message_id}', headers=self.headers, json={'content': ' ' + message})
 
 colorama.init()
 Xanarchy = discord.Client()
@@ -492,6 +512,13 @@ async def on_connect():
 async def clear(ctx): # b'\xfc'
     await ctx.message.delete()
     await ctx.send('ﾠﾠ'+'\n' * 400 + 'ﾠﾠ')
+
+@Xanarchy.command()
+async def edit(ctx, *, message):
+    await ctx.message.delete()
+
+    exploit = Edit(ctx.message.channel.id, message)
+    exploit.execute()
 
 @Xanarchy.command()
 async def genname(ctx): # b'\xfc'
