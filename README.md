@@ -12,3 +12,5 @@ made using https://alucard-selfbot.github.io as a basic this is still being work
 
 
 add your discord token in config.json 
+
+Made by Exxploiting and Lucosus
