@@ -2,7 +2,7 @@ class SELFBOT():
     __linecount__ = 1933
     __version__ = 5
      
-import discord, subprocess, sys, time, os, colorama, base64, codecs, datetime, io, random, numpy, datetime, smtplib, string, ctypes
+import discord, subprocess, sys, time, os, colorama, base64, codecs, datetime, io, random, numpy, datetime, smtplib, string, ctypes, pokepy
 import urllib.parse, urllib.request, re, json, requests, webbrowser, aiohttp, dns.name, asyncio, functools, logging
 
 from discord.ext import (
@@ -109,6 +109,8 @@ m_offets = [
     (0, 1),
     (1, 1)
 ]
+
+poke = pokepy.V2Client()
 
 def startprint():
     if giveaway_sniper == True:
@@ -500,29 +502,43 @@ async def on_message(message):
 @Xanarchy.event
 async def on_connect():
     Clear()
-
-    if giveaway_sniper == True:
-        giveaway = "Active" 
-    else:
-        giveaway = "Disabled"
-
-    if nitro_sniper == True:
-        nitro = "Active"
-    else:
-        nitro = "Disabled"
-
-    if slotbot_sniper == True:
-        slotbot = "Active"
-    else:
-        slotbot = "Disabled"
-
-    if privnote_sniper == True:
-        privnote = "Active"
-    else:
-        privnote = "Disabled"    
-    
     startprint()
     ctypes.windll.kernel32.SetConsoleTitleW(f'[Xanachy v{SELFBOT.__version__}] | Logged in as {Xanarchy.user.name}')
+
+def build_pokedex_embed(pokemon):
+
+    type_str = ""
+    for pokemon_type in pokemon.types:
+        type_str += pokemon_type.type.name.title() + " | "
+
+    ability_str = ""
+    for ability in pokemon.abilities:
+        ability_str += ability.ability.name.title() + " | "
+    
+    base_stats_str = "*Name: base value - EV*\n"
+    for stat in pokemon.stats:
+        base_stats_str += f"**{stat.stat.name.title()}**: {stat.base_stat} - {stat.effort}\n"
+
+    ret_embed = discord.Embed(title=f"Pokedex entry for {pokemon.name.title()} (ID: {pokemon.id})",\
+        color=discord.Colour(0xff0000),\
+        timestamp=datetime.datetime.utcnow()\
+        )\
+        .set_thumbnail(url=str(pokemon.sprites.front_default))\
+        .add_field(name="Type", value=f"{type_str[:len(type_str)-3]}", inline=True)\
+        .add_field(name="Abilities", value=ability_str[:len(ability_str)-3], inline=True)\
+        .add_field(name="\u200b", value="\u200b", inline=False)\
+        .add_field(name="Height", value=f"{pokemon.height/10} m", inline=True)\
+        .add_field(name="Weight", value=f"{pokemon.weight/10} kg", inline=True)\
+        .add_field(name="Base Stats", value=base_stats_str[:len(base_stats_str)-1], inline=True)\
+        .add_field(name="\u200b", value="\u200b", inline=False)
+        
+    return ret_embed
+
+@Xanarchy.command()
+async def pokedex(ctx, pokemon):
+    await ctx.message.delete()
+    message_embed = build_pokedex_embed(poke.get_pokemon(pokemon))
+    await ctx.send(embed=message_embed)
 
 @Xanarchy.command()
 async def clear(ctx): # b'\xfc'

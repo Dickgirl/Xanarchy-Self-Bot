@@ -10,3 +10,5 @@ pyPrivnote
 gtts
 dnspython
 image
+pokepy
+pyinstaller
