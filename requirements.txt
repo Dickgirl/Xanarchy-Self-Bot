@@ -12,3 +12,4 @@ dnspython
 image
 pokepy
 pyinstaller
+randomuser

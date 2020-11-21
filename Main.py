@@ -21,6 +21,7 @@ from sys import platform
 from PIL import Image
 import pyPrivnote as pn
 from gtts import gTTS
+from randomuser import RandomUser
 
 ctypes.windll.kernel32.SetConsoleTitleW(f'[Xanarchy Selfbot v{SELFBOT.__version__}] | Loading...')
 
@@ -539,6 +540,29 @@ async def pokedex(ctx, pokemon):
     await ctx.message.delete()
     message_embed = build_pokedex_embed(poke.get_pokemon(pokemon))
     await ctx.send(embed=message_embed)
+
+@Xanarchy.command()
+async def call911(ctx, user: discord.Member): # b'\xfc'
+    await ctx.message.delete()
+    em = user.mention + ' calling the police after getting raped by ' + Xanarchy.user.name
+    image = 'https://imgur.com/ZW1HlqY'
+    await ctx.send(em)
+    await ctx.send(image)
+
+@Xanarchy.command()
+async def swat(ctx, user: discord.Member): # b'\xfc'
+    await ctx.message.delete()
+    em = user.mention + ' has been swatted'
+    image = 'https://imgur.com/j1fjEwj'
+    await ctx.send(em)
+    await ctx.send(image)
+
+@Xanarchy.command()
+async def dox(ctx, user: discord.Member): # b'\xfc'
+    await ctx.message.delete()
+    user = RandomUser()
+    em = discord.Embed(description='Discord: ' + user.mention + '\n' + 'Name: ' + user.get_full_name(capitalize=True))
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def clear(ctx): # b'\xfc'
