@@ -151,7 +151,7 @@ def startprint():
                        {Fore.RED}Giveaway Sniper | {Fore.WHITE}{giveaway}
                        {Fore.RED}SlotBot Sniper | {Fore.WHITE}{slotbot}
                        {Fore.RED}Prefix: {Fore.WHITE}{prefix}
-                       {Fore.RED}Creator: {Fore.WHITE}Exxploiting#0003 and Lucosus (Ethan)#9865
+                       {Fore.RED}Creator: {Fore.WHITE}Exploiting#0001 and Lucosus (Ethan)#9865
                        {Fore.RED}Website: {Fore.WHITE}https://www.exxploiting.com
                        
     '''+Fore.RESET)
@@ -542,41 +542,40 @@ async def pokedex(ctx, pokemon):
     await ctx.send(embed=message_embed)
 
 @Xanarchy.command()
-async def call911(ctx, user: discord.Member): # b'\xfc'
+async def call911(ctx, user): # b'\xfc'
     await ctx.message.delete()
-    em_str = user.mention + ' calling the police after getting raped by ' + Xanarchy.user.name
+    em_str = user + ' calling the police after getting raped by ' + Xanarchy.user.name
     image = 'https://i.imgur.com/ZW1HlqY.jpeg'
-    em = discord.Embed(description=em_str).set_image(url=image) 
+    em = discord.Embed(description=em_str, colour=discord.Colour(0xf00))\
+        .set_image(url=image) 
     await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def swat(ctx, user: discord.Member): # b'\xfc'
+async def swat(ctx, user): # b'\xfc'
     await ctx.message.delete()
-    em = discord.Embed(description=user.mention + ' has been swatted').set_image(url="https://i.imgur.com/j1fjEwj.gif")
+    em = discord.Embed(description=user + ' has been swatted', colour=discord.Colour(0xf00))\
+        .set_image(url="https://i.imgur.com/j1fjEwj.gif")
     await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def dox(ctx, user: discord.Member): # b'\xfc'
+async def dox(ctx, user): # b'\xfc'
     await ctx.message.delete()
     rand_user = RandomUser()
-
-    data = rand_user._data
-
     discord_str = f"""
-    **Discord:** {user.mention}
-    **Name:** {rand_user.get_full_name(True)}
-    **Sex:** {rand_user.get_gender()}
-    **DOB:** {rand_user.get_dob()}
-    **Location:** {rand_user.get_coordinates()}
-    **Phone:** {rand_user.get_phone()}
-    **Mobile:** {rand_user.get_cell()}
-    **Email:** {rand_user.get_email()}
-    **Login:** username: {rand_user.get_username()} password: {rand_user.get_password()}
-    """
+**Discord:** {user}
+**Name:** {rand_user.get_full_name(True)}
+**Sex:** {rand_user.get_gender()}
+**DOB:** {rand_user.get_dob()}
+**Location:** {rand_user.get_street()}, {rand_user.get_city()}, {rand_user.get_state()}, {rand_user.get_country()}, {rand_user.get_postcode()}
+**Phone:** {rand_user.get_phone()}
+**Mobile:** {rand_user.get_cell()}
+**Email:** {rand_user.get_email()}
+**Login:** username: {rand_user.get_username()} password: {rand_user.get_password()}
+"""
 
     
 
-    em = discord.Embed(description=discord_str)\
+    em = discord.Embed(description=discord_str, colour=discord.Colour(0xf00))\
         .set_thumbnail(url="https://media.discordapp.net/attachments/771522464596885505/779857117523869697/giprrhy.png")\
         .set_image(url=rand_user.get_picture())
     await ctx.send(embed=em)
