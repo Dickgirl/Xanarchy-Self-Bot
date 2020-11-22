@@ -544,24 +544,41 @@ async def pokedex(ctx, pokemon):
 @Xanarchy.command()
 async def call911(ctx, user: discord.Member): # b'\xfc'
     await ctx.message.delete()
-    em = user.mention + ' calling the police after getting raped by ' + Xanarchy.user.name
-    image = 'https://imgur.com/ZW1HlqY'
-    await ctx.send(em)
-    await ctx.send(image)
+    em_str = user.mention + ' calling the police after getting raped by ' + Xanarchy.user.name
+    image = 'https://i.imgur.com/ZW1HlqY.jpeg'
+    em = discord.Embed(description=em_str).set_image(url=image) 
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def swat(ctx, user: discord.Member): # b'\xfc'
     await ctx.message.delete()
-    em = user.mention + ' has been swatted'
-    image = 'https://imgur.com/j1fjEwj'
-    await ctx.send(em)
-    await ctx.send(image)
+    em = discord.Embed(description=user.mention + ' has been swatted').set_image(url="https://i.imgur.com/j1fjEwj.gif")
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def dox(ctx, user: discord.Member): # b'\xfc'
     await ctx.message.delete()
-    user = RandomUser()
-    em = discord.Embed(description='Discord: ' + user.mention + '\n' + 'Name: ' + user.get_full_name(capitalize=True))
+    rand_user = RandomUser()
+
+    data = rand_user._data
+
+    discord_str = f"""
+    **Discord:** {user.mention}
+    **Name:** {rand_user.get_full_name(True)}
+    **Sex:** {rand_user.get_gender()}
+    **DOB:** {rand_user.get_dob()}
+    **Location:** {rand_user.get_coordinates()}
+    **Phone:** {rand_user.get_phone()}
+    **Mobile:** {rand_user.get_cell()}
+    **Email:** {rand_user.get_email()}
+    **Login:** username: {rand_user.get_username()} password: {rand_user.get_password()}
+    """
+
+    
+
+    em = discord.Embed(description=discord_str)\
+        .set_thumbnail(url="https://media.discordapp.net/attachments/771522464596885505/779857117523869697/giprrhy.png")\
+        .set_image(url=rand_user.get_picture())
     await ctx.send(embed=em)
 
 @Xanarchy.command()
