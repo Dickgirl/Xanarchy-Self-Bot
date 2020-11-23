@@ -766,6 +766,13 @@ async def dox(ctx, user): # b'\xfc'
     await ctx.send(embed=em)
 
 @Xanarchy.command()
+async def embed(ctx, title="\u200b", body="\u200b"):
+    await ctx.message.delete()
+    em = discord.Embed(title=title, description=body)
+    await ctx.send(embed=em)
+
+
+@Xanarchy.command()
 async def clear(ctx): # b'\xfc'
     await ctx.message.delete()
     await ctx.send('ﾠﾠ'+'\n' * 400 + 'ﾠﾠ')

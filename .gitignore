@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # Config File
-*.json
+config.json
 
 # Bot generated directories
 logs/
