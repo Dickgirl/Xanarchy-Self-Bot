@@ -544,6 +544,30 @@ async def pokedex(ctx, pokemon):
 
 
 @Xanarchy.command()
+async def log(ctx, filename=None, number_of_messages=100):
+    await ctx.message.delete()
+
+    if (not os.path.exists("logs")): os.mkdir("logs")
+
+    if (filename == None): 
+        file_time = datetime.datetime.utcnow()
+        file_time_str = f"{file_time}".replace(" ", ".").replace(":", ".")
+        filename = f"log_{ctx.guild.id}-{ctx.channel.id}_{file_time_str}"
+
+    messages = await ctx.message.channel.history(limit=number_of_messages).flatten()
+
+    f = open(f"./logs/{filename}.txt", "x", encoding="utf-16"); f.close()
+    message_data_list = []
+    for message in messages:
+        dict_to_add = {"author": f"{message.author.name}#{message.author.discriminator}", "content": message.content.replace("\n", "\\n")}
+        message_data_list.append(dict_to_add)
+    with open(f"./logs/{filename}.txt", "a", encoding="utf-16") as file_obj:
+        file_obj.write(f"LOGS FROM CHANNEL {str(messages[0].channel.id)}\n\n")
+        for message in message_data_list:
+            print(message)
+            file_obj.write(f"[{message['author']}] {message['content']}\n")
+
+@Xanarchy.command()
 async def udp(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60): # b'\xfc'
     await ctx.message.delete()
 
