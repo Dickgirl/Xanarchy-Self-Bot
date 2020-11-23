@@ -22,6 +22,7 @@ from PIL import Image
 import pyPrivnote as pn
 from gtts import gTTS
 from randomuser import RandomUser
+from pythonping import ping as pyping
 
 ctypes.windll.kernel32.SetConsoleTitleW(f'[Xanarchy Selfbot v{SELFBOT.__version__}] | Loading...')
 
@@ -540,6 +541,77 @@ async def pokedex(ctx, pokemon):
     await ctx.message.delete()
     message_embed = build_pokedex_embed(poke.get_pokemon(pokemon))
     await ctx.send(embed=message_embed)
+
+
+@Xanarchy.command()
+async def udp(ctx): # b'\xfc'
+    await ctx.message.delete()
+    em = discord.Embed(title='UDP Methods', description='STD' + '\n' + 'UDP' + '\n' + 'UDPHEX' + '\n' + 'HOLD ' + '\n' + 'FUZE' + '\n' + 'BLEND' + '\n' + 'EMBER-HOME' + '\n' + 'UDPRAPE ' + '\n' + 'ntp')
+    await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def layer3(ctx): # b'\xfc'
+    await ctx.message.delete()
+    em = discord.Embed(title='Layer3 Methods', description='x.25' + '\n' + 'dnu' + '\n' + 'dhu' + '\n' + 'dpu ' + '\n' + 'echo_reply' + '\n' + 'echo_request' + '\n' + 'gre' + '\n' + 'igmpq ')
+    await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def amps(ctx): # b'\xfc'
+    await ctx.message.delete()
+    em = discord.Embed(title='Amps Methods', description='QOTD' + '\n' + 'Portmap' + '\n' + 'NetBIOS' + '\n' + 'SNMP ' + '\n' + 'XDMCP' + '\n' + 'cLDAP' + '\n' + 'DTLS' + '\n' + 'IPSec ' + '\n' + 'Modbus' + '\n' + 'OpenVPN' + '\n' + 'MSSQL' + '\n' + 'Citrix ' + '\n' + 'SSDP' + '\n' + 'Digiman' + '\n' + 'ARD ' + '\n' + 'RDP ' + '\n' + 'STUN' + '\n' + 'WSD' + '\n' + 'BFD' + '\n' + 'SIP ' + '\n' + 'sentinel' + '\n' + 'NAT-PMP' + '\n' + 'CoAP' + '\n' + 'BitTorrent-DHT ' + '\n' + 'AFS' + '\n' + 'Ubiquiti' + '\n' + 'MemcacheD ' + '\n' + 'vxWorks ' + '\n' + 'SRCDS ' + '\n' + 'SRP' + '\n' + 'Netcode ' + '\n' + 'FiveMGS ' + '\n' + 'Lantronix' + '\n' + 'PMS ' + '\n' + 'DVR ' + '\n' + 'Netis-Routers')
+    await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def bypass(ctx):
+    await ctx.message.delete()
+    em = discord.Embed(title="Bypasses", description="OVH\nOVHx\nOVH-KILL\nNFO\nNFOx\nNFO-KILL\nVOX\n100UP-KILLER\nHYDRA-KILLER\nDEDI-RAPE\nVPN-NULL\nk.o\novh-tcp\ndvr\nnfo-atom\nkillall\nnfo-rx\nhydrav2\n100up-tcp\n100up-tcpv2\novh-atom")
+    await ctx.send(embed=em)
+
+@Xanarchy.command()
+async def tcp(ctx):
+    await ctx.message.delete()
+    em = discord.Embed(title="TCP Methods", description="TCP\nTCPx\nSYN\nASYN\nUSYN\nXSYN\nSSYN\nESSYN\nACK\nXACK\nSACK\nFRAG\nZAP\ntelnet\nxsshex\nRST\nPSH\nFIN")
+    await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def methods(ctx): # b'\xfc'
+    await ctx.message.delete()
+    em = discord.Embed(description='Amps' + '\n' + 'Layer3' + '\n' + 'UDP' + '\n' + 'TCP' + '\n' + 'Bypass')
+    await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def ping(ctx, ip_address = "1.1.1.1", bytes_size=32):
+    await ctx.message.delete()
+
+    res = pyping(ip_address, count=1, size=bytes_size - 8)
+
+    send_str = f"```\nPinging {ip_address} with {bytes_size} bytes of data:\n"
+
+    msg = await ctx.send(send_str + "```")
+    time_val = float(res._responses[0].time_elapsed)
+    await asyncio.sleep(delay=time_val)
+    send_str += f"{res._responses[0]}\n"
+    await msg.edit(content=send_str+"```")
+
+    delay = 0.4 + (1-0.4)*random.random()
+    await asyncio.sleep(delay=delay)
+    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
+    await msg.edit(content=send_str+"```")
+
+    delay = 1.5 + (3-1.5)*random.random()
+    await asyncio.sleep(delay=delay)
+    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
+    await msg.edit(content=send_str+"```")
+
+    await asyncio.sleep(delay=4.5)
+    send_str += f"Request timed out\n"
+    await msg.edit(content=send_str+"```")
+
 
 @Xanarchy.command()
 async def call911(ctx, user): # b'\xfc'
@@ -1497,7 +1569,14 @@ async def _ball(ctx, *, question): # b'\xfc'
       'It is quite possible',
       'That is a definite yes!',
       'Maybe',
-      'There is a good chance'
+      'There is a good chance',
+      'As I see it, yes',
+      'Ask again later',
+      'Better not tell you now',
+      'Cannot predict now',
+      'Outlook not so good',
+      'You may rely on it',
+      'Very doubtful'
     ]
     answer = random.choice(responses)
     embed = discord.Embed()
