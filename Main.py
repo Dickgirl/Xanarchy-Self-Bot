@@ -544,43 +544,133 @@ async def pokedex(ctx, pokemon):
 
 
 @Xanarchy.command()
-async def udp(ctx): # b'\xfc'
+async def udp(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60): # b'\xfc'
     await ctx.message.delete()
-    em = discord.Embed(title='UDP Methods', description='STD' + '\n' + 'UDP' + '\n' + 'UDPHEX' + '\n' + 'HOLD ' + '\n' + 'FUZE' + '\n' + 'BLEND' + '\n' + 'EMBER-HOME' + '\n' + 'UDPRAPE ' + '\n' + 'ntp')
-    await ctx.send(embed=em)
+
+    method_list = 'STD\nUDP\nUDPHEX\nHOLD\nFUZE\nBLEND\nEMBER-HOME\nUDPRAPE\nntp'.split('\n')
+
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+        
+    else:
+        em = discord.Embed(title='UDP Methods', description='\n'.join(method_list))
+        await ctx.send(embed=em)
 
 
 @Xanarchy.command()
-async def layer3(ctx): # b'\xfc'
+async def layer3(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60): # b'\xfc'
     await ctx.message.delete()
-    em = discord.Embed(title='Layer3 Methods', description='x.25' + '\n' + 'dnu' + '\n' + 'dhu' + '\n' + 'dpu ' + '\n' + 'echo_reply' + '\n' + 'echo_request' + '\n' + 'gre' + '\n' + 'igmpq ')
-    await ctx.send(embed=em)
+
+    method_list = 'x.25\ndnu\ndhu\ndpu\necho_reply\necho_request\ngre\nigmpq'.split("\n")
+
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+        
+    else:
+        em = discord.Embed(title='Layer3 Methods', description='\n'.join(method_list))
+        await ctx.send(embed=em)
 
 
 @Xanarchy.command()
-async def amps(ctx): # b'\xfc'
+async def amps(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60): # b'\xfc'
     await ctx.message.delete()
-    em = discord.Embed(title='Amps Methods', description='QOTD' + '\n' + 'Portmap' + '\n' + 'NetBIOS' + '\n' + 'SNMP ' + '\n' + 'XDMCP' + '\n' + 'cLDAP' + '\n' + 'DTLS' + '\n' + 'IPSec ' + '\n' + 'Modbus' + '\n' + 'OpenVPN' + '\n' + 'MSSQL' + '\n' + 'Citrix ' + '\n' + 'SSDP' + '\n' + 'Digiman' + '\n' + 'ARD ' + '\n' + 'RDP ' + '\n' + 'STUN' + '\n' + 'WSD' + '\n' + 'BFD' + '\n' + 'SIP ' + '\n' + 'sentinel' + '\n' + 'NAT-PMP' + '\n' + 'CoAP' + '\n' + 'BitTorrent-DHT ' + '\n' + 'AFS' + '\n' + 'Ubiquiti' + '\n' + 'MemcacheD ' + '\n' + 'vxWorks ' + '\n' + 'SRCDS ' + '\n' + 'SRP' + '\n' + 'Netcode ' + '\n' + 'FiveMGS ' + '\n' + 'Lantronix' + '\n' + 'PMS ' + '\n' + 'DVR ' + '\n' + 'Netis-Routers')
-    await ctx.send(embed=em)
+
+    method_list = 'QOTD\nPortmap\nNetBIOS\nSNMP\nXDMCP\ncLDAP\nDTLS\nIPSec\nModbus\nOpenVPN\nMSSQL\nCitrix\nSSDP\nDigiman\nARD\nRDP\nSTUN\nWSD\nBFD\nSIP\nsentinel\nNAT-PMP\nCoAP\nBitTorrent-DHT\nAFS\nUbiquiti\nMemcacheD\nvxWorks\nSRCDS\nSRP\nNetcode\nFiveMGS\nLantronix\nPMS\nDVR\nNetis-Routers'.split("\n")
+    
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+        
+    else:
+        em = discord.Embed(title='Amps Methods', description='\n'.join(method_list))
+        await ctx.send(embed=em)
 
 
 @Xanarchy.command()
-async def bypass(ctx):
+async def bypass(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60):
     await ctx.message.delete()
-    em = discord.Embed(title="Bypasses", description="OVH\nOVHx\nOVH-KILL\nNFO\nNFOx\nNFO-KILL\nVOX\n100UP-KILLER\nHYDRA-KILLER\nDEDI-RAPE\nVPN-NULL\nk.o\novh-tcp\ndvr\nnfo-atom\nkillall\nnfo-rx\nhydrav2\n100up-tcp\n100up-tcpv2\novh-atom")
-    await ctx.send(embed=em)
+
+    method_list = "OVH\nOVHx\nOVH-KILL\nNFO\nNFOx\nNFO-KILL\nVOX\n100UP-KILLER\nHYDRA-KILLER\nDEDI-RAPE\nVPN-NULL\nk.o\novh-tcp\ndvr\nnfo-atom\nkillall\nnfo-rx\nhydrav2\n100up-tcp\n100up-tcpv2\novh-atom".split("\n")
+
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+        
+    else:
+        em = discord.Embed(title="Bypasses", description='\n'.join(method_list))
+        await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def tcp(ctx):
+async def tcp(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60):
     await ctx.message.delete()
-    em = discord.Embed(title="TCP Methods", description="TCP\nTCPx\nSYN\nASYN\nUSYN\nXSYN\nSSYN\nESSYN\nACK\nXACK\nSACK\nFRAG\nZAP\ntelnet\nxsshex\nRST\nPSH\nFIN")
-    await ctx.send(embed=em)
+
+    method_list = "TCP\nTCPx\nSYN\nASYN\nUSYN\nXSYN\nSSYN\nESSYN\nACK\nXACK\nSACK\nFRAG\nZAP\ntelnet\nxsshex\nRST\nPSH\nFIN".split("\n")
+
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+        
+    else:
+        em = discord.Embed(title="TCP Methods", description="\n".join(method_list))
+        await ctx.send(embed=em)
 
 
 @Xanarchy.command()
 async def methods(ctx): # b'\xfc'
     await ctx.message.delete()
-    em = discord.Embed(description='Amps' + '\n' + 'Layer3' + '\n' + 'UDP' + '\n' + 'TCP' + '\n' + 'Bypass')
+    em = discord.Embed(description='Amps\nLayer3\nUDP\nTCP\nBypass')
     await ctx.send(embed=em)
 
 
@@ -611,7 +701,6 @@ async def ping(ctx, ip_address = "1.1.1.1", bytes_size=32):
     await asyncio.sleep(delay=4.5)
     send_str += f"Request timed out\n"
     await msg.edit(content=send_str+"```")
-
 
 @Xanarchy.command()
 async def call911(ctx, user): # b'\xfc'
