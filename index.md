@@ -1,5 +1,5 @@
 # Help Commands
-(Website)[https://www.exxploiting.com]
+[Website](https://www.exxploiting.com)
 -Privnote Sniper
 -Nitro Sniper
 -Giveaway Sniper
