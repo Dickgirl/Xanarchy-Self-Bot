@@ -1,6 +1,6 @@
 ---
-name: Feature request, test
-about: Suggest an idea for this project
+name: Feature request: raw
+about: Suggest an idea for this project: raw
 ---
 
 **Is your feature request related to a problem? Please describe.**
