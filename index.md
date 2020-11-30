@@ -1,10 +1,9 @@
 # Help Commands
-[Help](https://www.exxploiting.com/commands/)
-
-Privnote Sniper
-Nitro Sniper
-Giveaway Sniper
-SlotBot Sniper
+(Website)[https://www.exxploiting.com]
+-Privnote Sniper
+-Nitro Sniper
+-Giveaway Sniper
+-SlotBot Sniper
 
 ### General Commands
 ``` 
