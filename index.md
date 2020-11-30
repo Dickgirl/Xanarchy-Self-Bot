@@ -81,6 +81,7 @@ Random Waifu[Anime]
 ```
 
 
+
 ```NSFW Commands
 lesbian
 Random lesbian [Anime] 
@@ -130,6 +131,7 @@ Random yuri[Anime]
 nsfwpfp
 Random NSFW Pfp[Anime] 
 ```
+
 
 
 ```Fun & Social Commands
@@ -259,6 +261,18 @@ Spam get hacked #paranoid
 sniper
 Sends a gif of a anime sniper
 
+Dox [user]
+drops a fake dox
+
+Swat [user]
+says you been swatted 
+
+call911 [user]
+says the user was raped by the users 
+
+embed "[title]" "[des]"
+embeds what you said
+
 fffox
 Fox fun fact and pic
 
@@ -275,3 +289,156 @@ ffpanda
 Panda fun fact and pic
 ```
 
+
+
+```Account Management Commands
+pfpgen
+Makes you a random anime pfp
+
+set-pfp (url) 
+Set the specified url as profile picture [Must have password set in config.json file]
+
+btcstream
+Stream current btc price
+
+pfpsteal (user)
+Allows you to steal mentioned user profile picture [Must have password set in config.json file]
+
+blank
+Turns your name and profile picture blank
+
+hypesquad (house)
+Allows you to change your hypesquad (ie: !hypesquad bravery) 
+
+fakenet (type) [name]
+Allows you to spoof connections in your profile (ie: !fakenet skype Xanarchy) 
+
+steal-all-pfp
+Steal all the pfps in the server 
+
+stream (message)
+Stream that message in your profile
+
+watching (message)
+Add a watching status with that message in your profile
+
+listening (message)
+Add a listening status with that message in your profile
+ 
+game (message)
+Add a game status with that message in your profile 
+
+masscon (type) (amount) (name)
+Add a big amount of connections to your profile (ie: !masscon skype 5 Xanarchy)
+```
+
+
+
+```Hacking Commands
+geoip (ip)
+Display various information about the IP 
+
+iplist
+My ip list
+
+ebay-view (url) (views)
+Send views to a ebay product (ie: !ebay-view https://www.ebay.es/itm/XXXXXX 100
+
+gmail-bomb
+Spam a gmail [Information is inserted via console}
+
+nitro
+Generate a random nitro code
+
+proxies
+Scraps HTTP/HTTPS/SOCKS4/SOCKS5 proxies
+
+address (text)
+Generates fake address based on the text you specify
+
+masslogin (choice)
+Allows you to mass-login in bot/user tokens [Choices can be: user and bot]
+
+pingweb (website)
+Pings a website in order to check if its working or not (ie: !pingweb https://google.com) 
+
+btc
+Display current Bitcoin price 
+
+eth
+Display current Ethereum price 
+
+encode (string)
+Encode a string to base64 ascii 
+
+decode (string)
+Decode a string from base64 to regular text 
+
+hastebin (message)
+ Saves your text/code to hastebin 
+ 
+log [Filename.txt] [Number Of Messages] 
+logs message in the chat the command was sent in
+```
+
+
+
+```Util Commands
+bitly (link)
+Shorten ur link using bitly [Must have bitly api key set in config.json file] 
+
+tinyurl (link)
+Shorten ur link using tinyurl 
+
+weather (city)
+ Lookup weather for the specified city
+ 
+backup-f
+Backup your friends name and discrim 
+
+auto-bump (channel id)
+Automatically bump server to disboard.org [Needs the Disboard to be in the server] 
+
+mac (mac)
+Lookup a bit of info about a MAC (ie: !mac xx:xx:xx:xx:xx:xx) 
+
+copy
+Copies guild channels, categories, voice channels and makes them in a new one 
+```
+
+
+
+```Raiding Commands
+tokeninfo (token)
+Display various information about the token
+
+tokenfuck (token)
+Crash, glitch screen of a token, all in discord 
+
+destroy
+Ban, delete roles, delete channels, edit guild info, mass create channels All in one! 
+
+dmall (messsage)
+Messages every user in that guild with a sleep time of 10 seconds for every user [Might get you disabled] 
+
+massban
+Ban all the users in that guild 
+
+masskick
+Kick all the users in that guild 
+
+massrole
+Mass create roles 
+
+masschannel
+Mass create channels 
+
+delroles
+Delete all the roles 
+
+delchannels
+Delete all the channel 
+
+massunban
+Unban every member
+```
