@@ -2,20 +2,14 @@
 [Help](https://www.exxploiting.com/commands/).
 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
 ```Done
 Added Edit and Mask Commands
-
-
+Added Embed [Title] [Text] 
+Added log [Filename.txt] [Number Of Messages] 
+Added More NSFW Commands
+Added Dox [user]
+Added Swat [user]
+Added call911 [user]
+Added Meme [user]
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Exxploiting/Xanarchy-Self-Bot/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
