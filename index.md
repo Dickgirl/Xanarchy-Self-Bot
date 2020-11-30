@@ -1,9 +1,9 @@
-###Help Commands
+## Help Commands
 [Help](https://www.exxploiting.com/commands/)
 
 
 
-```General Commands
+``` General Commands
 av (user)
 Displays the profile picture of the mentioned user
 
@@ -82,7 +82,7 @@ Random Waifu[Anime]
 
 
 
-```NSFW Commands
+``` NSFW Commands
 lesbian
 Random lesbian [Anime] 
 
@@ -134,7 +134,7 @@ Random NSFW Pfp[Anime]
 
 
 
-```Fun & Social Commands
+``` Fun & Social Commands
 unflip  
 Sends: ┬─┬ ノ( ゜-゜ノ)
 
@@ -291,7 +291,7 @@ Panda fun fact and pic
 
 
 
-```Account Management Commands
+``` Account Management Commands
 pfpgen
 Makes you a random anime pfp
 
@@ -334,7 +334,7 @@ Add a big amount of connections to your profile (ie: !masscon skype 5 Xanarchy)
 
 
 
-```Hacking Commands
+``` Hacking Commands
 geoip (ip)
 Display various information about the IP 
 
@@ -383,7 +383,7 @@ logs message in the chat the command was sent in
 
 
 
-```Util Commands
+``` Util Commands
 bitly (link)
 Shorten ur link using bitly [Must have bitly api key set in config.json file] 
 
@@ -408,7 +408,7 @@ Copies guild channels, categories, voice channels and makes them in a new one
 
 
 
-```Raiding Commands
+``` Raiding Commands
 tokeninfo (token)
 Display various information about the token
 
