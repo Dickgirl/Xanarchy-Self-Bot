@@ -1,5 +1,5 @@
 ## Xanarchy Selfbot
-[Help](https://www.exxploiting.com/commands/).
+[Help](https://www.exxploiting.com/commands/)
 
 
 
