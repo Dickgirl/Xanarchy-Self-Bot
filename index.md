@@ -1,7 +1,10 @@
 ## Help Commands
 [Help](https://www.exxploiting.com/commands/)
 
-
+# Privnote Sniper
+# Nitro Sniper
+# Giveaway Sniper
+# SlotBot Sniper
 
 ``` General Commands
 av (user)
