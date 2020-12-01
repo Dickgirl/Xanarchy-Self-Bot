@@ -82,6 +82,9 @@ Random Neko[Anime]
 
 waifu
 Random Waifu[Anime] 
+
+iwannashittalk
+lists a load of shit talking server
 ```
 
 
@@ -240,6 +243,9 @@ Generate a random name based on the server members
 
 xell
 Says fuck the uk
+
+incon
+incon loves loli hentai with a gif
 
 clown
 Send a video
