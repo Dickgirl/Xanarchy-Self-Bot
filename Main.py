@@ -1,8 +1,8 @@
 class SELFBOT():
     __linecount__ = 1933
     __version__ = 5
-     
-import discord, subprocess, sys, time, os, colorama, base64, codecs, datetime, io, random, numpy, datetime, smtplib, string, ctypes
+
+import discord, subprocess, sys, time, os, colorama, base64, codecs, datetime, io, random, numpy, datetime, smtplib, string, ctypes, pokepy
 import urllib.parse, urllib.request, re, json, requests, webbrowser, aiohttp, dns.name, asyncio, functools, logging
 
 from discord.ext import (
@@ -21,6 +21,8 @@ from sys import platform
 from PIL import Image
 import pyPrivnote as pn
 from gtts import gTTS
+from randomuser import RandomUser
+from pythonping import ping as pyping
 
 ctypes.windll.kernel32.SetConsoleTitleW(f'[Xanarchy Selfbot v{SELFBOT.__version__}] | Loading...')
 
@@ -72,7 +74,7 @@ languages = {
     'ko'    : 'Korean, Korea'
 }
 
-locales = [ 
+locales = [
     "da", "de",
     "en-GB", "en-US",
     "es-ES", "fr",
@@ -92,10 +94,10 @@ locales = [
 
 m_numbers = [
     ":one:",
-    ":two:", 
-    ":three:", 
-    ":four:", 
-    ":five:", 
+    ":two:",
+    ":three:",
+    ":four:",
+    ":five:",
     ":six:"
 ]
 
@@ -110,9 +112,11 @@ m_offets = [
     (1, 1)
 ]
 
+poke = pokepy.V2Client()
+
 def startprint():
     if giveaway_sniper == True:
-        giveaway = "Active" 
+        giveaway = "Active"
     else:
         giveaway = "Disabled"
 
@@ -129,28 +133,28 @@ def startprint():
     if privnote_sniper == True:
         privnote = "Active"
     else:
-        privnote = "Disabled" 
-    
+        privnote = "Disabled"
+
     print(f'''{Fore.RESET}
-                {Fore.RED}                                                               _|        
-                {Fore.RED} _|      _|                                                    _|                
+                {Fore.RED}                                                               _|
+                {Fore.RED} _|      _|                                                    _|
                 {Fore.RED}   _|  _|      _|_|_|  _|_|_|      _|_|_|  _|  _|_|    _|_|_|  _|_|_|    _|    _|
                 {Fore.RED}     _|      _|    _|  _|    _|  _|    _|  _|_|      _|        _|    _|  _|    _|
-                {Fore.RED}   _|  _|    _|    _|  _|    _|  _|    _|  _|        _|        _|    _|  _|    _| 
-                {Fore.RED} _|      _|    _|_|_|  _|    _|    _|_|_|  _|          _|_|_|  _|    _|    _|_|_|  
-                {Fore.RED}                                                                               _|              
-                {Fore.RED}                                                                           _|_|                
-                        
-                        
-                       {Fore.RED}Xanarchy {SELFBOT.__version__} | {Fore.WHITE}Logged in as: {Xanarchy.user.name}#{Xanarchy.user.discriminator} {Fore.RED}| ID: {Fore.WHITE}{Xanarchy.user.id}   
+                {Fore.RED}   _|  _|    _|    _|  _|    _|  _|    _|  _|        _|        _|    _|  _|    _|
+                {Fore.RED} _|      _|    _|_|_|  _|    _|    _|_|_|  _|          _|_|_|  _|    _|    _|_|_|
+                {Fore.RED}                                                                               _|
+                {Fore.RED}                                                                           _|_|
+
+
+                       {Fore.RED}Xanarchy {SELFBOT.__version__} | {Fore.WHITE}Logged in as: {Xanarchy.user.name}#{Xanarchy.user.discriminator} {Fore.RED}| ID: {Fore.WHITE}{Xanarchy.user.id}
                        {Fore.RED}Privnote Sniper | {Fore.WHITE}{privnote}
                        {Fore.RED}Nitro Sniper | {Fore.WHITE}{nitro}
                        {Fore.RED}Giveaway Sniper | {Fore.WHITE}{giveaway}
                        {Fore.RED}SlotBot Sniper | {Fore.WHITE}{slotbot}
                        {Fore.RED}Prefix: {Fore.WHITE}{prefix}
-                       {Fore.RED}Creator: {Fore.WHITE}Exxploiting#0003 and Lucosus (Ethan)#9865
+                       {Fore.RED}Creator: {Fore.WHITE}Exploiting#0001 and Lucosus (Ethan)#9865
                        {Fore.RED}Website: {Fore.WHITE}https://www.exxploiting.com
-                       
+
     '''+Fore.RESET)
 
 def Clear():
@@ -262,7 +266,7 @@ def _masslogin(choice):
         for token in BotTokens():
             loop.run_until_complete(Login().start(token, bot=True))
     else:
-        return        
+        return
 
 def async_executor():
     def outer(func):
@@ -290,7 +294,7 @@ def Nitro():
     code = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
     return f'https://discord.gift/{code}'
 
-def RandomColor(): 
+def RandomColor():
     randcolor = discord.Color(random.randint(0x000000, 0xFFFFFF))
     return randcolor
 
@@ -340,7 +344,7 @@ Xanarchy = commands.Bot(
     command_prefix=prefix,
     self_bot=True
 )
-Xanarchy.remove_command('help') 
+Xanarchy.remove_command('help')
 
 @tasks.loop(seconds=3)
 async def btc_status():
@@ -348,8 +352,8 @@ async def btc_status():
     value = r['bpi']['USD']['rate']
     await asyncio.sleep(3)
     btc_stream = discord.Streaming(
-        name="Current BTC price: "+value+"$ USD", 
-        url="https://www.twitch.tv/monstercat", 
+        name="Current BTC price: "+value+"$ USD",
+        url="https://www.twitch.tv/monstercat",
     )
     await Xanarchy.change_presence(activity=btc_stream)
 
@@ -368,7 +372,7 @@ async def on_command_error(ctx, error):
     elif isinstance(error, discord.errors.Forbidden):
         print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}Discord error: {error}"+Fore.RESET)
     elif "Cannot send an empty message" in error_str:
-        print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}Couldnt send a empty message"+Fore.RESET)               
+        print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}Couldnt send a empty message"+Fore.RESET)
     else:
         print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{error_str}"+Fore.RESET)
 
@@ -382,18 +386,18 @@ async def on_message(message):
     def GiveawayData():
         print(
         f"{Fore.WHITE} - CHANNEL: {Fore.YELLOW}[{message.channel}]"
-        f"\n{Fore.WHITE} - SERVER: {Fore.YELLOW}[{message.guild}]"   
+        f"\n{Fore.WHITE} - SERVER: {Fore.YELLOW}[{message.guild}]"
     +Fore.RESET)
 
     def SlotBotData():
         print(
         f"{Fore.WHITE} - CHANNEL: {Fore.YELLOW}[{message.channel}]"
-        f"\n{Fore.WHITE} - SERVER: {Fore.YELLOW}[{message.guild}]"   
-    +Fore.RESET)  
+        f"\n{Fore.WHITE} - SERVER: {Fore.YELLOW}[{message.guild}]"
+    +Fore.RESET)
 
     def NitroData(elapsed, code):
         print(
-        f"{Fore.WHITE} - CHANNEL: {Fore.YELLOW}[{message.channel}]" 
+        f"{Fore.WHITE} - CHANNEL: {Fore.YELLOW}[{message.channel}]"
         f"\n{Fore.WHITE} - SERVER: {Fore.YELLOW}[{message.guild}]"
         f"\n{Fore.WHITE} - AUTHOR: {Fore.YELLOW}[{message.author}]"
         f"\n{Fore.WHITE} - ELAPSED: {Fore.YELLOW}[{elapsed}]"
@@ -402,25 +406,25 @@ async def on_message(message):
 
     def PrivnoteData(code):
         print(
-        f"{Fore.WHITE} - CHANNEL: {Fore.YELLOW}[{message.channel}]" 
+        f"{Fore.WHITE} - CHANNEL: {Fore.YELLOW}[{message.channel}]"
         f"\n{Fore.WHITE} - SERVER: {Fore.YELLOW}[{message.guild}]"
         f"\n{Fore.WHITE} - CONTENT: {Fore.YELLOW}[The content can be found at Privnote/{code}.txt]"
-    +Fore.RESET)        
+    +Fore.RESET)
 
-    time = datetime.datetime.now().strftime("%H:%M %p")  
+    time = datetime.datetime.now().strftime("%H:%M %p")
     if 'discord.gift/' in message.content:
         if nitro_sniper == True:
             start = datetime.datetime.now()
             code = re.search("discord.gift/(.*)", message.content).group(1)
             token = config.get('token')
-                
+
             headers = {'Authorization': token}
-    
+
             r = requests.post(
-                f'https://discordapp.com/api/v6/entitlements/gift-codes/{code}/redeem', 
+                f'https://discordapp.com/api/v6/entitlements/gift-codes/{code}/redeem',
                 headers=headers,
             ).text
-        
+
             elapsed = datetime.datetime.now() - start
             elapsed = f'{elapsed.seconds}.{elapsed.microseconds}'
 
@@ -440,7 +444,7 @@ async def on_message(message):
                 NitroData(elapsed, code)
         else:
             return
-            
+
     if 'Someone just dropped' in message.content:
         if slotbot_sniper == True:
             if message.author.id == 346353957029019648:
@@ -449,7 +453,7 @@ async def on_message(message):
                 except discord.errors.Forbidden:
                     print(""
                     f"\n{Fore.CYAN}[{time} - SlotBot Couldnt Grab]"+Fore.RESET)
-                    SlotBotData()                     
+                    SlotBotData()
                 print(""
                 f"\n{Fore.CYAN}[{time} - Slotbot Grabbed]"+Fore.RESET)
                 SlotBotData()
@@ -459,12 +463,12 @@ async def on_message(message):
     if 'GIVEAWAY' in message.content:
         if giveaway_sniper == True:
             if message.author.id == 294882584201003009:
-                try:    
+                try:
                     await message.add_reaction("🎉")
                 except discord.errors.Forbidden:
                     print(""
                     f"\n{Fore.CYAN}[{time} - Giveaway Couldnt React]"+Fore.RESET)
-                    GiveawayData()            
+                    GiveawayData()
                 print(""
                 f"\n{Fore.CYAN}[{time} - Giveaway Sniped]"+Fore.RESET)
                 GiveawayData()
@@ -473,7 +477,7 @@ async def on_message(message):
 
     if f'Congratulations <@{Xanarchy.user.id}>' in message.content:
         if giveaway_sniper == True:
-            if message.author.id == 294882584201003009:    
+            if message.author.id == 294882584201003009:
                 print(""
                 f"\n{Fore.CYAN}[{time} - Giveaway Won]"+Fore.RESET)
                 GiveawayData()
@@ -487,7 +491,7 @@ async def on_message(message):
             try:
                 note_text = pn.read_note(link)
             except Exception as e:
-                print(e)    
+                print(e)
             with open(f'Privnote/{code}.txt', 'a+') as f:
                 print(""
                 f"\n{Fore.CYAN}[{time} - Privnote Sniped]"+Fore.RESET)
@@ -500,29 +504,273 @@ async def on_message(message):
 @Xanarchy.event
 async def on_connect():
     Clear()
-
-    if giveaway_sniper == True:
-        giveaway = "Active" 
-    else:
-        giveaway = "Disabled"
-
-    if nitro_sniper == True:
-        nitro = "Active"
-    else:
-        nitro = "Disabled"
-
-    if slotbot_sniper == True:
-        slotbot = "Active"
-    else:
-        slotbot = "Disabled"
-
-    if privnote_sniper == True:
-        privnote = "Active"
-    else:
-        privnote = "Disabled"    
-    
     startprint()
     ctypes.windll.kernel32.SetConsoleTitleW(f'[Xanachy v{SELFBOT.__version__}] | Logged in as {Xanarchy.user.name}')
+
+def build_pokedex_embed(pokemon):
+
+    type_str = ""
+    for pokemon_type in pokemon.types:
+        type_str += pokemon_type.type.name.title() + " | "
+
+    ability_str = ""
+    for ability in pokemon.abilities:
+        ability_str += ability.ability.name.title() + " | "
+
+    base_stats_str = "*Name: base value - EV*\n"
+    for stat in pokemon.stats:
+        base_stats_str += f"**{stat.stat.name.title()}**: {stat.base_stat} - {stat.effort}\n"
+
+    ret_embed = discord.Embed(title=f"Pokedex entry for {pokemon.name.title()} (ID: {pokemon.id})",\
+        color=discord.Colour(0xff0000),\
+        timestamp=datetime.datetime.utcnow()\
+        )\
+        .set_thumbnail(url=str(pokemon.sprites.front_default))\
+        .add_field(name="Type", value=f"{type_str[:len(type_str)-3]}", inline=True)\
+        .add_field(name="Abilities", value=ability_str[:len(ability_str)-3], inline=True)\
+        .add_field(name="\u200b", value="\u200b", inline=False)\
+        .add_field(name="Height", value=f"{pokemon.height/10} m", inline=True)\
+        .add_field(name="Weight", value=f"{pokemon.weight/10} kg", inline=True)\
+        .add_field(name="Base Stats", value=base_stats_str[:len(base_stats_str)-1], inline=True)\
+        .add_field(name="\u200b", value="\u200b", inline=False)
+
+    return ret_embed
+
+@Xanarchy.command()
+async def pokedex(ctx, pokemon):
+    await ctx.message.delete()
+    message_embed = build_pokedex_embed(poke.get_pokemon(pokemon))
+    await ctx.send(embed=message_embed)
+
+
+@Xanarchy.command()
+async def log(ctx, filename=None, number_of_messages=100):
+    await ctx.message.delete()
+
+    if (not os.path.exists("logs")): os.mkdir("logs")
+
+    if (filename == None):
+        file_time = datetime.datetime.utcnow()
+        file_time_str = f"{file_time}".replace(" ", ".").replace(":", ".")
+        filename = f"log_{ctx.guild.id}-{ctx.channel.id}_{file_time_str}"
+
+    messages = await ctx.message.channel.history(limit=number_of_messages).flatten()
+
+    f = open(f"./logs/{filename}.txt", "x", encoding="utf-16"); f.close()
+    message_data_list = []
+    for message in messages:
+        dict_to_add = {"author": f"{message.author.name}#{message.author.discriminator}", "content": message.content.replace("\n", "\\n")}
+        message_data_list.append(dict_to_add)
+    with open(f"./logs/{filename}.txt", "a", encoding="utf-16") as file_obj:
+        file_obj.write(f"LOGS FROM CHANNEL {str(messages[0].channel.id)}\n\n")
+        for message in message_data_list:
+            print(message)
+            file_obj.write(f"[{message['author']}] {message['content']}\n")
+
+@Xanarchy.command()
+async def udp(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60): # b'\xfc'
+    await ctx.message.delete()
+
+    method_list = 'STD\nUDP\nUDPHEX\nHOLD\nFUZE\nBLEND\nEMBER-HOME\nUDPRAPE\nntp'.split('\n')
+
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+
+    else:
+        em = discord.Embed(title='UDP Methods', description='\n'.join(method_list))
+        await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def layer3(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60): # b'\xfc'
+    await ctx.message.delete()
+
+    method_list = 'x.25\ndnu\ndhu\ndpu\necho_reply\necho_request\ngre\nigmpq'.split("\n")
+
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+
+    else:
+        em = discord.Embed(title='Layer3 Methods', description='\n'.join(method_list))
+        await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def amps(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60): # b'\xfc'
+    await ctx.message.delete()
+
+    method_list = 'QOTD\nPortmap\nNetBIOS\nSNMP\nXDMCP\ncLDAP\nDTLS\nIPSec\nModbus\nOpenVPN\nMSSQL\nCitrix\nSSDP\nDigiman\nARD\nRDP\nSTUN\nWSD\nBFD\nSIP\nsentinel\nNAT-PMP\nCoAP\nBitTorrent-DHT\nAFS\nUbiquiti\nMemcacheD\nvxWorks\nSRCDS\nSRP\nNetcode\nFiveMGS\nLantronix\nPMS\nDVR\nNetis-Routers'.split("\n")
+
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+
+    else:
+        em = discord.Embed(title='Amps Methods', description='\n'.join(method_list))
+        await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def bypass(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60):
+    await ctx.message.delete()
+
+    method_list = "OVH\nOVHx\nOVH-KILL\nNFO\nNFOx\nNFO-KILL\nVOX\n100UP-KILLER\nHYDRA-KILLER\nDEDI-RAPE\nVPN-NULL\nk.o\novh-tcp\ndvr\nnfo-atom\nkillall\nnfo-rx\nhydrav2\n100up-tcp\n100up-tcpv2\novh-atom".split("\n")
+
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+
+    else:
+        em = discord.Embed(title="Bypasses", description='\n'.join(method_list))
+        await ctx.send(embed=em)
+
+@Xanarchy.command()
+async def tcp(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60):
+    await ctx.message.delete()
+
+    method_list = "TCP\nTCPx\nSYN\nASYN\nUSYN\nXSYN\nSSYN\nESSYN\nACK\nXACK\nSACK\nFRAG\nZAP\ntelnet\nxsshex\nRST\nPSH\nFIN".split("\n")
+
+    if (attack_method != None and attack_method.lower() in [method.lower() for method in method_list]):
+        if (len(ip_address.split(".")) != 4): return await ctx.send("That is not a valid IP address")
+
+        for _byte in ip_address.split("."):
+            if (not (int(_byte) in range(256))): return await ctx.send("That is not a valid IP address")
+
+        sending_text = f"`Sending {attack_method} attack to {ip_address} on port {port}"
+        msg = await ctx.send(sending_text + '`')
+        for __ in range(5):
+            await asyncio.sleep(time//5)
+            sending_text += "."
+            await msg.edit(content=sending_text+"`")
+        await msg.edit(content=sending_text+"finished`")
+
+    else:
+        em = discord.Embed(title="TCP Methods", description="\n".join(method_list))
+        await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def methods(ctx): # b'\xfc'
+    await ctx.message.delete()
+    em = discord.Embed(description='Amps\nLayer3\nUDP\nTCP\nBypass')
+    await ctx.send(embed=em)
+
+
+@Xanarchy.command()
+async def ping(ctx, ip_address = "1.1.1.1", bytes_size=32):
+    await ctx.message.delete()
+
+    res = pyping(ip_address, count=1, size=bytes_size - 8)
+
+    send_str = f"```\nPinging {ip_address} with {bytes_size} bytes of data:\n"
+
+    msg = await ctx.send(send_str + "```")
+    time_val = float(res._responses[0].time_elapsed)
+    await asyncio.sleep(delay=time_val)
+    send_str += f"{res._responses[0]}\n"
+    await msg.edit(content=send_str+"```")
+
+    delay = 0.4 + (1-0.4)*random.random()
+    await asyncio.sleep(delay=delay)
+    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
+    await msg.edit(content=send_str+"```")
+
+    delay = 1.5 + (3-1.5)*random.random()
+    await asyncio.sleep(delay=delay)
+    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
+    await msg.edit(content=send_str+"```")
+
+    await asyncio.sleep(delay=4.5)
+    send_str += f"Request timed out\n"
+    await msg.edit(content=send_str+"```")
+
+@Xanarchy.command()
+async def call911(ctx, user): # b'\xfc'
+    await ctx.message.delete()
+    em_str = user + ' calling the police after getting raped by ' + Xanarchy.user.name
+    image = 'https://i.imgur.com/ZW1HlqY.jpeg'
+    em = discord.Embed(description=em_str, colour=discord.Colour(0xf00))\
+        .set_image(url=image)
+    await ctx.send(embed=em)
+
+@Xanarchy.command()
+async def swat(ctx, user): # b'\xfc'
+    await ctx.message.delete()
+    em = discord.Embed(description=user + ' has been swatted', colour=discord.Colour(0xf00))\
+        .set_image(url="https://i.imgur.com/j1fjEwj.gif")
+    await ctx.send(embed=em)
+
+@Xanarchy.command()
+async def dox(ctx, user): # b'\xfc'
+    await ctx.message.delete()
+    rand_user = RandomUser()
+    discord_str = f"""
+**Discord:** {user}
+**Name:** {rand_user.get_full_name(True)}
+**Sex:** {rand_user.get_gender()}
+**DOB:** {rand_user.get_dob()}
+**Location:** {rand_user.get_street()}, {rand_user.get_city()}, {rand_user.get_state()}, {rand_user.get_country()}, {rand_user.get_postcode()}
+**Phone:** {rand_user.get_phone()}
+**Mobile:** {rand_user.get_cell()}
+**Email:** {rand_user.get_email()}
+**Login:** username: {rand_user.get_username()} password: {rand_user.get_password()}
+"""
+
+
+
+    em = discord.Embed(description=discord_str, colour=discord.Colour(0xf00))\
+        .set_thumbnail(url="https://media.discordapp.net/attachments/771522464596885505/779857117523869697/giprrhy.png")\
+        .set_image(url=rand_user.get_picture())
+    await ctx.send(embed=em)
+
+@Xanarchy.command()
+async def embed(ctx, title="\u200b", body="\u200b"):
+    await ctx.message.delete()
+    em = discord.Embed(title=title, description=body)
+    await ctx.send(embed=em)
+
 
 @Xanarchy.command()
 async def clear(ctx): # b'\xfc'
@@ -577,10 +825,10 @@ async def login(ctx, _token): # b'\xfc'
             setTimeout(() => {
             location.reload();
             }, 2500);
-            }   
+            }
             """
     driver.get("https://discordapp.com/login")
-    driver.execute_script(script+f'\nlogin("{_token}")')    
+    driver.execute_script(script+f'\nlogin("{_token}")')
 
 @Xanarchy.command()
 async def botlogin(ctx, _token): # b'\xfc'
@@ -591,7 +839,7 @@ async def botlogin(ctx, _token): # b'\xfc'
     script = """
     function login(token) {
       ((i) => {
-        window.webpackJsonp.push([  
+        window.webpackJsonp.push([
           [i], {
             [i]: (n, b, d) => {
               let dispatcher;
@@ -659,7 +907,7 @@ async def botlogin(ctx, _token): # b'\xfc'
         ]);
       })(Math.random());
     }
-    """ 
+    """
     driver.get("https://discordapp.com/login")
     driver.execute_script(script+f'\nlogin("Bot {_token}")')
 
@@ -677,7 +925,7 @@ async def address(ctx, *, text): # b'\xfc'
     try:
         await ctx.send(embed=em)
     except:
-        await ctx.send(final_str)    
+        await ctx.send(final_str)
 
 @Xanarchy.command()
 async def weather(ctx, *, city): # b'\xfc'
@@ -715,7 +963,7 @@ async def weather(ctx, *, city): # b'\xfc'
                 Humidity: {humidity}
                 Wind Speed: {wind_speed}
                 City: {city.capitalize()}
-                ''')    
+                ''')
         except KeyError:
             print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{city} Is not a real city"+Fore.RESET)
         else:
@@ -731,7 +979,7 @@ async def bitly(ctx, *, link): # b'\xfc'
             async with aiohttp.ClientSession() as session:
                 async with session.get(f'https://api-ssl.bitly.com/v3/shorten?longUrl={link}&domain=bit.ly&format=json&access_token={bitly_key}') as req:
                     r = await req.read()
-                    r = json.loads(r) 
+                    r = json.loads(r)
             new = r['data']['url']
             em = discord.Embed()
             em.add_field(name='Shortened link', value=new, inline=False)
@@ -756,13 +1004,13 @@ async def cuttly(ctx, *, link): # b'\xfc'
             try:
                 await ctx.send(embed=em)
             except:
-                await ctx.send(new)    
+                await ctx.send(new)
         except Exception as e:
             print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}"+Fore.RESET)
         else:
             print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{req.text}"+Fore.RESET)
 
-@Xanarchy.command() 
+@Xanarchy.command()
 async def cat(ctx): # b'\xfc'
     await ctx.message.delete()
     if cat_key == '':
@@ -791,7 +1039,7 @@ async def dog(ctx): # b'\xfc'
     try:
         await ctx.send(embed=em)
     except:
-        await ctx.send(str(r['message']))    
+        await ctx.send(str(r['message']))
 
 @Xanarchy.command()
 async def fox(ctx): # b'\xfc'
@@ -802,7 +1050,7 @@ async def fox(ctx): # b'\xfc'
     try:
         await ctx.send(embed=em)
     except:
-        await ctx.send(r['image'])    
+        await ctx.send(r['image'])
 
 @Xanarchy.command()
 async def encode(ctx, string): # b'\xfc'
@@ -810,11 +1058,11 @@ async def encode(ctx, string): # b'\xfc'
     decoded_stuff = base64.b64encode('{}'.format(string).encode('ascii'))
     encoded_stuff = str(decoded_stuff)
     encoded_stuff = encoded_stuff[2:len(encoded_stuff)-1]
-    await ctx.send(encoded_stuff) 
+    await ctx.send(encoded_stuff)
 
 @Xanarchy.command()
 async def decode(ctx, string): # b'\xfc'+
-    await ctx.message.delete()  
+    await ctx.message.delete()
     strOne = (string).encode("ascii")
     pad = len(strOne)%4
     strOne += b"="*pad
@@ -831,7 +1079,7 @@ async def _ebay_view(ctx, url, views: int): # b'\xfc'
         headers = {
            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36",
            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-        }        
+        }
         for _i in range(views):
             requests.get(url, headers=headers)
     EbayViewer(url, views)
@@ -870,7 +1118,7 @@ async def geoip(ctx, *, ipaddr: str = '1.3.3.7'): # b'\xfc'
 @Xanarchy.command()
 async def pingweb(ctx, website = None): # b'\xfc'
     await ctx.message.delete()
-    if website is None: 
+    if website is None:
         pass
     else:
         try:
@@ -880,7 +1128,7 @@ async def pingweb(ctx, website = None): # b'\xfc'
         if r == 404:
             await ctx.send(f'Site is down, responded with a status code of {r}', delete_after=3)
         else:
-            await ctx.send(f'Site is up, responded with a status code of {r}', delete_after=3)       
+            await ctx.send(f'Site is up, responded with a status code of {r}', delete_after=3)
 
 @Xanarchy.command()
 async def tweet(ctx, username: str, *, message: str): # b'\xfc'
@@ -915,7 +1163,7 @@ async def av(ctx, *, user: discord.Member=None): # b'\xfc'
         async with session.get(str(avatar)) as resp:
             image = await resp.read()
     with io.BytesIO(image) as file:
-        await ctx.send(file = discord.File(file, f"Avatar.{format}"))      
+        await ctx.send(file = discord.File(file, f"Avatar.{format}"))
 
 @Xanarchy.command(aliases=['ri', 'role'])
 async def roleinfo(ctx, *, role: discord.Role): # b'\xfc'
@@ -948,7 +1196,7 @@ async def roleinfo(ctx, *, role: discord.Role): # b'\xfc'
 async def whois(ctx, *, user: discord.Member = None): # b'\xfc'
     await ctx.message.delete()
     if user is None:
-        user = ctx.author      
+        user = ctx.author
     date_format = "%a, %d %b %Y %I:%M %p"
     em = discord.Embed(description=user.mention)
     em.set_author(name=str(user), icon_url=user.avatar_url)
@@ -997,7 +1245,7 @@ async def combine(ctx, name1, name2): # b'\xfc'
     ship = "".join([name1letters, name2letters])
     emb = (discord.Embed(description=f"{ship}"))
     emb.set_author(name=f"{name1} + {name2}")
-    await ctx.send(embed=emb)       
+    await ctx.send(embed=emb)
 
 @Xanarchy.command(name='1337-speak', aliases=['1337speak'])
 async def _1337_speak(ctx, *, text): # b'\xfc'
@@ -1020,10 +1268,10 @@ async def blank(ctx): # b'\xfc'
     await ctx.message.delete()
     if config.get('password') == 'password-here':
         print(f"{Fore.RED}[ERROR] {Fore.YELLOW}You didnt put your password in the config.json file"+Fore.RESET)
-    else:  
+    else:
         password = config.get('password')
         with open('Images/Avatars/Transparent.png', 'rb') as f:
-          try:      
+          try:
              await Xanarchy.user.edit(password=password, username="ٴٴٴٴ", avatar=f.read())
           except discord.HTTPException as e:
             print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}"+Fore.RESET)
@@ -1088,7 +1336,7 @@ async def hypesquad(ctx, house): # b'\xfc'
       'Authorization': token,
       'Content-Type': 'application/json',
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.305 Chrome/69.0.3497.128 Electron/4.0.8 Safari/537.36'
-    }    
+    }
     if house == "bravery":
       payload = {'house_id': 1}
     elif house == "brilliance":
@@ -1103,8 +1351,8 @@ async def hypesquad(ctx, house): # b'\xfc'
     except Exception as e:
         print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}"+Fore.RESET)
 
-@Xanarchy.command(aliases=['tokenfucker', 'disable', 'crash']) 
-async def tokenfuck(ctx, _token): # b'\xfc' 
+@Xanarchy.command(aliases=['tokenfucker', 'disable', 'crash'])
+async def tokenfuck(ctx, _token): # b'\xfc'
     await ctx.message.delete()
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.12) Gecko/20050915 Firefox/1.0.7',
@@ -1132,7 +1380,7 @@ async def tokenfuck(ctx, _token): # b'\xfc'
         'icon': None,
         'name': "Xanarchy",
         'region': "europe"
-    } 
+    }
     for _i in range(50):
         requests.post('https://discordapp.com/api/v6/guilds', headers=headers, json=guild)
     while True:
@@ -1156,7 +1404,7 @@ async def tokenfuck(ctx, _token): # b'\xfc'
             except Exception as e:
                 print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}"+Fore.RESET)
             else:
-                break   
+                break
 
 @Xanarchy.command()
 async def masslogin(ctx, choice = None): # b'\xfc'
@@ -1168,11 +1416,11 @@ async def masscon(ctx, _type, amount: int, *, name=None): # b'\xfc'
     await ctx.message.delete()
     payload = {
         'name': name,
-        'visibility': 1 
+        'visibility': 1
     }
     headers = {
         'Authorization': token,
-        'Content-Type':'application/json', 
+        'Content-Type':'application/json',
     }
     avaliable = [
         'battlenet',
@@ -1186,7 +1434,7 @@ async def masscon(ctx, _type, amount: int, *, name=None): # b'\xfc'
     for _i in range(amount):
         try:
             ID = random.randint(10000000, 90000000)
-            time.sleep(5) 
+            time.sleep(5)
             r = requests.put(f'https://canary.discordapp.com/api/v6/users/@me/connections/{_type}/{ID}', data=json.dumps(payload), headers=headers)
             if r.status_code == 200:
                 print(f"[{Fore.GREEN}+{Fore.RESET}] New connection added!")
@@ -1211,14 +1459,14 @@ async def fakenet(ctx, _type, *, name = None): # b'\xfc'
     }
     headers = {
         'Authorization': token,
-        'Content-Type':'application/json', 
+        'Content-Type':'application/json',
     }
     if name is None:
         name = 'about:blank'
     elif _type not in avaliable:
         await ctx.send(f'Avaliable connections: `{avaliable}`', delete_after = 3)
     r = requests.put(f'https://canary.discordapp.com/api/v6/users/@me/connections/{_type}/{ID}', data=json.dumps(payload), headers=headers)
-    if r.status_code == 200:            
+    if r.status_code == 200:
         await ctx.send(f"Added connection: `{type}` with Username: `{name}` and ID: `{ID}`", delete_after = 3)
     else:
         await ctx.send('Some error has happened with the endpoint', delete_after = 3)
@@ -1229,7 +1477,7 @@ async def tokeninfo(ctx, _token): # b'\xfc'
     headers = {
         'Authorization': _token,
         'Content-Type': 'application/json'
-    }      
+    }
     try:
         res = requests.get('https://canary.discordapp.com/api/v6/users/@me', headers=headers)
         res = res.json()
@@ -1237,7 +1485,7 @@ async def tokeninfo(ctx, _token): # b'\xfc'
         locale = res['locale']
         avatar_id = res['avatar']
         language = languages.get(locale)
-        creation_date = datetime.datetime.utcfromtimestamp(((int(user_id) >> 22) + 1420070400000) / 1000).strftime('%d-%m-%Y %H:%M:%S UTC') 
+        creation_date = datetime.datetime.utcfromtimestamp(((int(user_id) >> 22) + 1420070400000) / 1000).strftime('%d-%m-%Y %H:%M:%S UTC')
     except KeyError:
         print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}Invalid token"+Fore.RESET)
     em = discord.Embed(
@@ -1271,7 +1519,7 @@ async def copy(ctx): # b'\xfc'
                         await x.create_voice_channel(f"{chann}")
                     if isinstance(chann, discord.TextChannel):
                         await x.create_text_channel(f"{chann}")
-    try:                
+    try:
         await g.edit(icon=ctx.guild.icon_url)
     except:
         pass
@@ -1281,14 +1529,14 @@ async def destroy(ctx): # b'\xfc'
     await ctx.message.delete()
     for channel in list(ctx.guild.channels):
         try:
-            await channel.delete()    
+            await channel.delete()
         except:
             pass
     for user in list(ctx.guild.members):
         try:
             await user.ban()
         except:
-            pass    
+            pass
     for role in list(ctx.guild.roles):
         try:
             await role.delete()
@@ -1301,9 +1549,9 @@ async def destroy(ctx): # b'\xfc'
             reason="https://Xanarchy-selfbot.github.io",
             icon=None,
             banner=None
-        )  
+        )
     except:
-        pass        
+        pass
     for _i in range(250):
         await ctx.guild.create_text_channel(name=RandString())
     for _i in range(250):
@@ -1314,7 +1562,7 @@ async def dmall(ctx, *, message): # b'\xfc'
     await ctx.message.delete()
     for user in list(ctx.guild.members):
         try:
-            await asyncio.sleep(5)    
+            await asyncio.sleep(5)
             await user.send(message)
         except:
             pass
@@ -1326,7 +1574,7 @@ async def massban(ctx): # b'\xfc'
         try:
             await user.ban()
         except:
-            pass    
+            pass
 
 @Xanarchy.command()
 async def masskick(ctx): # b'\xfc'
@@ -1335,7 +1583,7 @@ async def masskick(ctx): # b'\xfc'
         try:
             await user.kick()
         except:
-            pass    
+            pass
 
 @Xanarchy.command()
 async def massrole(ctx): # b'\xfc'
@@ -1344,7 +1592,7 @@ async def massrole(ctx): # b'\xfc'
         try:
             await ctx.guild.create_role(name=RandString(), color=RandomColor())
         except:
-            return    
+            return
 
 @Xanarchy.command()
 async def masschannel(ctx): # b'\xfc'
@@ -1364,7 +1612,7 @@ async def delchannels(ctx): # b'\xfc'
         except:
             return
 
-@Xanarchy.command() 
+@Xanarchy.command()
 async def delroles(ctx): # b'\xfc'
     await ctx.message.delete()
     for role in list(ctx.guild.roles):
@@ -1375,7 +1623,7 @@ async def delroles(ctx): # b'\xfc'
 
 @Xanarchy.command()
 async def massunban(ctx): # b'\xfc'
-    await ctx.message.delete()    
+    await ctx.message.delete()
     banlist = await ctx.guild.bans()
     for users in banlist:
         try:
@@ -1386,7 +1634,7 @@ async def massunban(ctx): # b'\xfc'
 
 @Xanarchy.command()
 async def spam(ctx, amount: int, *, message): # b'\xfc'
-    await ctx.message.delete()    
+    await ctx.message.delete()
     for _i in range(amount):
         await ctx.send(message)
 
@@ -1398,9 +1646,9 @@ async def dm(ctx, user : discord.Member, *, message): # b'\xfc'
         return
     else:
         try:
-            await user.send(message) 
+            await user.send(message)
         except:
-            pass       
+            pass
 
 @Xanarchy.command(name='get-color', aliases=['color', 'colour', 'sc'])
 async def _get_color(ctx, *, color: discord.Colour): # b'\xfc'
@@ -1410,7 +1658,7 @@ async def _get_color(ctx, *, color: discord.Colour): # b'\xfc'
     file.seek(0)
     em = discord.Embed(color=color, title=f'Showing Color: {str(color)}')
     em.set_image(url='attachment://color.png')
-    await ctx.send(file=discord.File(file, 'color.png'), embed=em) 
+    await ctx.send(file=discord.File(file, 'color.png'), embed=em)
 
 @Xanarchy.command()
 async def tinyurl(ctx, *, link): # b'\xfc'
@@ -1441,7 +1689,14 @@ async def _ball(ctx, *, question): # b'\xfc'
       'It is quite possible',
       'That is a definite yes!',
       'Maybe',
-      'There is a good chance'
+      'There is a good chance',
+      'As I see it, yes',
+      'Ask again later',
+      'Better not tell you now',
+      'Cannot predict now',
+      'Outlook not so good',
+      'You may rely on it',
+      'Very doubtful'
     ]
     answer = random.choice(responses)
     embed = discord.Embed()
@@ -1483,9 +1738,9 @@ async def _auto_bump(ctx, channelid): # b'\xfc'
     count = 0
     while True:
         try:
-            count += 1 
+            count += 1
             channel = Xanarchy.get_channel(int(channelid))
-            await channel.send('!d bump')           
+            await channel.send('!d bump')
             print(f'{Fore.BLUE}[AUTO-BUMP] {Fore.GREEN}Bump number: {count} sent'+Fore.RESET)
             await asyncio.sleep(7200)
         except Exception as e:
@@ -1514,17 +1769,17 @@ async def guildicon(ctx): # b'\xfc'
 async def _backup_f(ctx): # b'\xfc'
     await ctx.message.delete()
     for friend in Xanarchy.user.friends:
-       friendlist = (friend.name)+'#'+(friend.discriminator)   
+       friendlist = (friend.name)+'#'+(friend.discriminator)
        with open('Backup/Friends.txt', 'a+') as f:
            f.write(friendlist+"\n" )
     for block in Xanarchy.user.blocked:
         blocklist = (block.name)+'#'+(block.discriminator)
-        with open('Backup/Blocked.txt', 'a+') as f: 
+        with open('Backup/Blocked.txt', 'a+') as f:
             f.write(blocklist+"\n" )
 
 @Xanarchy.command(name='first-message', aliases=['firstmsg', 'fm', 'firstmessage'])
 async def _first_message(ctx, channel: discord.TextChannel = None): # b'\xfc'
-    await ctx.message.delete()  
+    await ctx.message.delete()
     if channel is None:
         channel = ctx.channel
     first_message = (await channel.history(limit=1, oldest_first=True).flatten())[0]
@@ -1610,9 +1865,9 @@ async def anal(ctx): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/anal")
     res = r.json()
-    em = discord.Embed()   
+    em = discord.Embed()
     em.set_image(url=res['url'])
-    await ctx.send(embed=em)   
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def erofeet(ctx): # b'\xfc'
@@ -1631,7 +1886,7 @@ async def trap(ctx): # b'\xfc'
     em = discord.Embed()
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
-    
+
 @Xanarchy.command()
 async def hololewd(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -1640,7 +1895,7 @@ async def hololewd(ctx): # b'\xfc'
     em = discord.Embed()
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
-    
+
 @Xanarchy.command()
 async def cum(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -1667,7 +1922,7 @@ async def futa(ctx): # b'\xfc'
     em = discord.Embed()
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
-    
+
 @Xanarchy.command()
 async def yuri(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -1685,7 +1940,7 @@ async def waifu(ctx): # b'\xfc'
     em = discord.Embed()
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
-    
+
 @Xanarchy.command()
 async def pfpgen(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -1694,8 +1949,8 @@ async def pfpgen(ctx): # b'\xfc'
     em = discord.Embed()
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
-    
-   
+
+
 @Xanarchy.command()
 async def feet(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -1712,7 +1967,7 @@ async def hentai(ctx): # b'\xfc'
     res = r.json()
     em = discord.Embed()
     em.set_image(url=res['url'])
-    await ctx.send(embed=em)   
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def neko(ctx): # b'\xfc'
@@ -1721,7 +1976,7 @@ async def neko(ctx): # b'\xfc'
     res = r.json()
     em = discord.Embed()
     em.set_image(url=res['url'])
-    await ctx.send(embed=em)   
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def wallpaper(ctx): # b'\xfc'
@@ -1730,8 +1985,8 @@ async def wallpaper(ctx): # b'\xfc'
     res = r.json()
     em = discord.Embed()
     em.set_image(url=res['url'])
-    await ctx.send(embed=em)   
-    
+    await ctx.send(embed=em)
+
 @Xanarchy.command()
 async def boobs(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -1740,7 +1995,7 @@ async def boobs(ctx): # b'\xfc'
     em = discord.Embed()
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
-    
+
 @Xanarchy.command()
 async def nsfwpfp(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -1755,7 +2010,7 @@ async def tits(ctx): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/tits")
     res = r.json()
-    em = discord.Embed()    
+    em = discord.Embed()
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
 
@@ -1775,7 +2030,7 @@ async def lewdneko(ctx): # b'\xfc'
     res = r.json()
     em = discord.Embed()
     em.set_image(url=res['url'])
-    await ctx.send(embed=em)   
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def lesbian(ctx): # b'\xfc'
@@ -1786,7 +2041,7 @@ async def lesbian(ctx): # b'\xfc'
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
 
-@Xanarchy.command()  
+@Xanarchy.command()
 async def feed(ctx, user: discord.Member): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/feed")
@@ -1839,7 +2094,7 @@ async def meme(ctx): # b'\xfc'
     em = discord.Embed(description=res['caption'])
     em.set_image(url=res['image'])
     await ctx.send(embed=em)
-    
+
 @Xanarchy.command()
 async def ffdog(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -1883,7 +2138,7 @@ async def fffox(ctx): # b'\xfc'
     res = r.json()
     em.set_image(url=res['link'])
     await ctx.send(embed=em)
-    
+
 @Xanarchy.command()
 async def ffkoala(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -1903,7 +2158,7 @@ async def pat(ctx, user: discord.Member): # b'\xfc'
     em = discord.Embed(description=user.mention)
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
-    
+
 @Xanarchy.command()
 async def kiss(ctx, user: discord.Member): # b'\xfc'
     await ctx.message.delete()
@@ -1979,12 +2234,12 @@ async def _group_leaver(ctx): # b'\xfc'
 @Xanarchy.command()
 async def help(ctx): # b'\xfc'
     await ctx.message.delete()
-    url = 'https://www.exxploiting.com/commands/'
+    url = 'https://exxploiting.github.io/Xanarchy-Self-Bot/'
     r = requests.get(url)
     if r.status_code == 200:
         webbrowser.open(url)
     else:
-        print('Page is currently under maintenance, our team will announce when the page is back online')    
+        print('Page is currently under maintenance, our team will announce when the page is back online')
 
 @Xanarchy.command()
 async def iplist(ctx): # b'\xfc'
@@ -1994,26 +2249,26 @@ async def iplist(ctx): # b'\xfc'
     if r.status_code == 200:
         webbrowser.open(url)
     else:
-        print('Page is currently under maintenance, our team will announce when the page is back online') 
+        print('Page is currently under maintenance, our team will announce when the page is back online')
 
 @Xanarchy.command()
 async def server(ctx): # b'\xfc'
     await ctx.message.delete()
-    url = 'https://discord.com/invite/cweamteam'
+    url = 'https://discord.com/invite/cweam'
     r = requests.get(url)
     if r.status_code == 200:
         webbrowser.open(url)
     else:
-        print('Page is currently under maintenance, our team will announce when the page is back online') 
+        print('Page is currently under maintenance, our team will announce when the page is back online')
 
 @Xanarchy.command()
 async def stream(ctx, *, message): # b'\xfc'
     await ctx.message.delete()
     stream = discord.Streaming(
         name=message,
-        url=stream_url, 
+        url=stream_url,
     )
-    await Xanarchy.change_presence(activity=stream)    
+    await Xanarchy.change_presence(activity=stream)
 
 @Xanarchy.command()
 async def game(ctx, *, message): # b'\xfc'
@@ -2028,8 +2283,8 @@ async def listening(ctx, *, message): # b'\xfc'
     await ctx.message.delete()
     await Xanarchy.change_presence(
         activity=discord.Activity(
-            type=discord.ActivityType.listening, 
-            name=message, 
+            type=discord.ActivityType.listening,
+            name=message,
         ))
 
 @Xanarchy.command()
@@ -2037,7 +2292,7 @@ async def watching(ctx, *, message): # b'\xfc'
     await ctx.message.delete()
     await Xanarchy.change_presence(
         activity=discord.Activity(
-            type=discord.ActivityType.watching, 
+            type=discord.ActivityType.watching,
             name=message
         ))
 
@@ -2082,16 +2337,23 @@ async def xell(ctx): # b'\xfc'
     await ctx.message.delete()
     xell = 'FUCK THE UK'
     await ctx.send(xell)
-    
+
+@Xanarchy.command()
+async def incon(ctx): # b'\xfc'
+    await ctx.message.delete()
+    em = discord.Embed(description='loves loli hentai', colour=discord.Colour(0xf00), title='Incon')\
+        .set_image(url="https://i.imgur.com/c9gMEi6.gif")
+    await ctx.send(embed=em)
+
 @Xanarchy.command()
 async def mys(ctx, amount: int): # b'\xfc'
-    await ctx.message.delete()  
+    await ctx.message.delete()
     mys = 'https://imgur.com/UKQfeqt'
     mys1 = '#BEPARANOID'
     for _i in range(amount):
         await ctx.send(mys)
         await ctx.send(mys1)
-    
+
 @Xanarchy.command()
 async def fuckoff(ctx): # b'\xfc'
     await ctx.message.delete()
@@ -2165,8 +2427,8 @@ async def logout(ctx): # b'\xfc'
 
 @Xanarchy.command(aliases=['btc-stream', 'streambtc', 'stream-btc', 'btcstatus'])
 async def btcstream(ctx):  # b'\xfc'
-    await ctx.message.delete()   
-    btc_status.start()        
+    await ctx.message.delete()
+    btc_status.start()
 
 @Xanarchy.command(name='steal-all-pfp', aliases=['steal-all-pfps', 'stealallpfps'])
 async def _steal_all_pfp(ctx): # b'\xfc'
