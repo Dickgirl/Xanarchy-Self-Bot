@@ -1,6 +1,8 @@
 # Help Commands
 [Website](https://www.exxploiting.com)
 
+[Download](https://github.com/Exxploiting/Xanarchy-Self-Bot/releases/tag/5.2)
+
 - Privnote Sniper
 - Nitro Sniper
 - Giveaway Sniper
