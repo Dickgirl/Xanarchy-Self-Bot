@@ -736,6 +736,26 @@ async def methods(ctx): # b'\xfc'
 async def fake_ping(ip_address, bytes_size, send_str, ctx):
     res = pyping(ip_address, count=1, size=bytes_size - 8)
 
+    msg = await ctx.send(send_str + "```")
+    time_val = float(res._responses[0].time_elapsed)
+    await asyncio.sleep(delay=time_val)
+    send_str += f"{res._responses[0]}\n"
+    await msg.edit(content=send_str+"```")
+
+    delay = 0.4 + (1-0.4)*random.random()
+    await asyncio.sleep(delay=delay)
+    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
+    await msg.edit(content=send_str+"```")
+
+    delay = 1.5 + (3-1.5)*random.random()
+    await asyncio.sleep(delay=delay)
+    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
+    await msg.edit(content=send_str+"```")
+
+    await asyncio.sleep(delay=4.5)
+    send_str += f"Request timed out\n"
+    await msg.edit(content=send_str+"```")
+
 async def tcp_ping(ctx, ip_address, bytes_size, send_str):
     pings = tcpping.measure_latency(host=ip_address, port=80, runs=4)
     msg = await ctx.send(content=send_str+"\n```")
