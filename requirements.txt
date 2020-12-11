@@ -13,3 +13,5 @@ image
 pokepy
 pyinstaller
 randomuser
+pythonping
+tcp-latency
