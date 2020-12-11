@@ -1,6 +1,6 @@
 class SELFBOT():
-    __linecount__ = 1933
-    __version__ = 5
+    __linecount__ = 2554
+    __version__ = 1
 
 import discord, subprocess, sys, time, os, colorama, base64, codecs, datetime, io, random, numpy, datetime, smtplib, string, ctypes, pokepy
 import urllib.parse, urllib.request, re, json, requests, webbrowser, aiohttp, dns.name, asyncio, functools, logging
@@ -138,24 +138,32 @@ def startprint():
         privnote = "Disabled"
 
     print(f'''{Fore.RESET}
-                {Fore.RED}                                                               _|
-                {Fore.RED} _|      _|                                                    _|
-                {Fore.RED}   _|  _|      _|_|_|  _|_|_|      _|_|_|  _|  _|_|    _|_|_|  _|_|_|    _|    _|
-                {Fore.RED}     _|      _|    _|  _|    _|  _|    _|  _|_|      _|        _|    _|  _|    _|
-                {Fore.RED}   _|  _|    _|    _|  _|    _|  _|    _|  _|        _|        _|    _|  _|    _|
-                {Fore.RED} _|      _|    _|_|_|  _|    _|    _|_|_|  _|          _|_|_|  _|    _|    _|_|_|
-                {Fore.RED}                                                                               _|
-                {Fore.RED}                                                                           _|_|
+                {Fore.MAGENTA}
 
+                                        ░░░░█▐▄▒▒▒▌▌▒▒▌░▌▒▐▐▐▒▒▐▒▒▌▒▀▄▀▄░
+                                        ░░░█▐▒▒▀▀▌░▀▀▀░░▀▀▀░░▀▀▄▌▌▐▒▒▒▌▐░
+                                        ░░▐▒▒▀▀▄▐░▀▀▄▄░░░░░░░░░░░▐▒▌▒▒▐░▌
+                                        ░░▐▒▌▒▒▒▌░▄▄▄▄█▄░░░░░░░▄▄▄▐▐▄▄▀░░
+                                        ░░▌▐▒▒▒▐░░░░░░░░░░░░░▀█▄░░░░▌▌░░░
+                                        ▄▀▒▒▌▒▒▐░░░░░░░▄░░▄░░░░░▀▀░░▌▌░░░
+                                        ▄▄▀▒▐▒▒▐░░░░░░░▐▀▀▀▄▄▀░░░░░░▌▌░░░
+                                        ░░░░█▌▒▒▌░░░░░▐▒▒▒▒▒▌░░░░░░▐▐▒▀▀▄
+                                        ░░▄▀▒▒▒▒▐░░░░░▐▒▒▒▒▐░░░░░▄█▄▒▐▒▒▒
+                                        ▄▀▒▒▒▒▒▄██▀▄▄░░▀▄▄▀░░▄▄▀█▄░█▀▒▒▒▒
+                                            ═╗ ╦┌─┐┌┐┌┌─┐┬─┐┌─┐┬ ┬┬ ┬
+                                            ╔╩╦╝├─┤│││├─┤├┬┘│  ├─┤└┬┘
+                                            ╩ ╚═┴ ┴┘└┘┴ ┴┴└─└─┘┴ ┴ ┴
+                            {Fore.MAGENTA}┌──────────────────────────────────────────────────┐
+                            {Fore.MAGENTA}│Creator: {Fore.WHITE}Exploiting#0001 and Lucosus (Ethan)#9865 {Fore.MAGENTA}│
+                            {Fore.MAGENTA}│Website: {Fore.WHITE}https://www.exxploiting.com              {Fore.MAGENTA}│
+                            {Fore.MAGENTA}└──────────────────────────────────────────────────┘
 
-                       {Fore.RED}Xanarchy {SELFBOT.__version__} | {Fore.WHITE}Logged in as: {Xanarchy.user.name}#{Xanarchy.user.discriminator} {Fore.RED}| ID: {Fore.WHITE}{Xanarchy.user.id}
-                       {Fore.RED}Privnote Sniper | {Fore.WHITE}{privnote}
-                       {Fore.RED}Nitro Sniper | {Fore.WHITE}{nitro}
-                       {Fore.RED}Giveaway Sniper | {Fore.WHITE}{giveaway}
-                       {Fore.RED}SlotBot Sniper | {Fore.WHITE}{slotbot}
-                       {Fore.RED}Prefix: {Fore.WHITE}{prefix}
-                       {Fore.RED}Creator: {Fore.WHITE}Exploiting#0001 and Lucosus (Ethan)#9865
-                       {Fore.RED}Website: {Fore.WHITE}https://www.exxploiting.com
+                                 {Fore.MAGENTA}      Logged in as    | {Fore.WHITE}{Xanarchy.user.name}#{Xanarchy.user.discriminator}
+                                 {Fore.MAGENTA}      Privnote Sniper | {Fore.WHITE}{privnote}
+                                 {Fore.MAGENTA}      Nitro Sniper    | {Fore.WHITE}{nitro}
+                                 {Fore.MAGENTA}      Giveaway Sniper | {Fore.WHITE}{giveaway}
+                                 {Fore.MAGENTA}      SlotBot Sniper  | {Fore.WHITE}{slotbot}
+                                 {Fore.MAGENTA}      Prefix          | {Fore.WHITE}{prefix}
 
     '''+Fore.RESET)
 
@@ -596,7 +604,7 @@ async def ports(ctx, ip = "127.0.0.1", port_range = "1-443"):
             if (port['state'] != "open"): continue
 
             sb += f"{key} - {port['name']}: {port['state']}\n"
-    
+
     if (sb[-3] == "`"): sb += "No open ports found"
     sb += "```"
     await ctx.message.delete()
@@ -1806,6 +1814,34 @@ async def _auto_bump(ctx, channelid): # b'\xfc'
         except Exception as e:
             print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}"+Fore.RESET)
 
+@Xanarchy.command(name='dank-beg', aliases=['dankbeg'])
+async def _beg_dank(ctx, channelid): # b'\xfc'
+    await ctx.message.delete()
+    count = 0
+    while True:
+        try:
+            count += 1
+            channel = Xanarchy.get_channel(int(channelid))
+            await channel.send('pls beg')
+            print(f'{Fore.BLUE}[AUTO-BEG] {Fore.GREEN}beg number: {count} sent'+Fore.RESET)
+            await asyncio.sleep(46)
+        except Exception as e:
+            print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}"+Fore.RESET)
+
+@Xanarchy.command(name='dank-fish', aliases=['dankfish'])
+async def _fish_dank(ctx, channelid): # b'\xfc'
+    await ctx.message.delete()
+    count = 0
+    while True:
+        try:
+            count += 1
+            channel = Xanarchy.get_channel(int(channelid))
+            await channel.send('pls fish')
+            print(f'{Fore.BLUE}[AUTO-FISH] {Fore.GREEN}fish number: {count} sent'+Fore.RESET)
+            await asyncio.sleep(46)
+        except Exception as e:
+            print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}"+Fore.RESET)
+
 @Xanarchy.command()
 async def tts(ctx, *, message): # b'\xfc'
     await ctx.message.delete()
@@ -2427,28 +2463,31 @@ async def clown(ctx): # b'\xfc'
     await ctx.send(clown)
 
 @Xanarchy.command()
-async def god(ctx): # b'\xfc'
+async def god(ctx, user): # b'\xfc'
     await ctx.message.delete()
-    god = 'IM GOD YOU HEAR ME'
-    await ctx.send(god)
+    em = discord.Embed(description=user + ' IM GOD YOU HEAR ME', colour=discord.Colour(0xf00))
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def hacked(ctx): # b'\xfc'
+async def hacked(ctx, user): # b'\xfc'
     await ctx.message.delete()
-    hacked = 'https://imgur.com/UKQfeqt'
-    await ctx.send(hacked)
+    em = discord.Embed(description=user + ' has been Hacked', colour=discord.Colour(0xf00))\
+        .set_image(url="https://i.imgur.com/UKQfeqt.gif")
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def sniper(ctx): # b'\xfc'
     await ctx.message.delete()
-    sniper = 'https://imgur.com/Fn5Oh8v'
-    await ctx.send(sniper)
+    em = discord.Embed(description=user + ' Has been sniped', colour=discord.Colour(0xf00))\
+         .set_image(url="https://i.imgur.com/MFgTfX5.gif")
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def happyre(ctx): # b'\xfc'
+async def happyre(ctx, user): # b'\xfc'
     await ctx.message.delete()
-    happyre = 'https://imgur.com/MFgTfX5'
-    await ctx.send(happyre)
+    em = discord.Embed(description=' ', colour=discord.Colour(0xf00))\
+         .set_image(url="https://i.imgur.com/ey46gL5.gif")
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def bold(ctx, *, message): # b'\xfc'
@@ -2513,4 +2552,3 @@ async def _gmail_bomb(ctx): # b'\xfc'
 
 if __name__ == '__main__':
     Init()
-
