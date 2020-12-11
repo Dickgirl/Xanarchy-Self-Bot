@@ -23,6 +23,8 @@ import pyPrivnote as pn
 from gtts import gTTS
 from randomuser import RandomUser
 from pythonping import ping as pyping
+import nmap
+import tcp_latency as tcpping
 
 ctypes.windll.kernel32.SetConsoleTitleW(f'[Xanarchy Selfbot v{SELFBOT.__version__}] | Loading...')
 
@@ -567,6 +569,40 @@ async def log(ctx, filename=None, number_of_messages=100):
             print(message)
             file_obj.write(f"[{message['author']}] {message['content']}\n")
 
+@Xanarchy.command(aliases=['portscan', 'scan'])
+async def ports(ctx, ip = "127.0.0.1", port_range = "1-443"):
+    await ctx.message.edit(content="Waiting for port scan results...")
+    nm = nmap.PortScanner()
+    nm.scan(ip, port_range)
+
+    try:
+        host = nm.all_hosts()[0]
+    except:
+        await ctx.message.delete()
+        await ctx.send("No available hosts found")
+
+    sb = f"Scan Results for {host} ({nm[host].hostname()})\nCommand: `{nm.command_line()}`\n```\n"
+    for proto in nm[host].all_protocols():
+        for key in nm[host][proto].keys():
+            if (proto == 'tcp'):
+                port = nm[host].tcp(key)
+            elif (proto == 'udp'):
+                port = nm[host].udp(key)
+            elif (proto == 'sctp'):
+                port = nm[host].sctp(key)
+            elif (proto == 'ip'):
+                port = nm[host].ip(key)
+
+            if (port['state'] != "open"): continue
+
+            sb += f"{key} - {port['name']}: {port['state']}\n"
+    
+    if (sb[-3] == "`"): sb += "No open ports found"
+    sb += "```"
+    await ctx.message.delete()
+    await ctx.send(sb)
+
+
 @Xanarchy.command()
 async def udp(ctx, attack_method=None, ip_address="1.1.1.1", port=80, time=60): # b'\xfc'
     await ctx.message.delete()
@@ -697,34 +733,38 @@ async def methods(ctx): # b'\xfc'
     em = discord.Embed(description='Amps\nLayer3\nUDP\nTCP\nBypass')
     await ctx.send(embed=em)
 
+async def fake_ping(ip_address, bytes_size, send_str, ctx):
+    res = pyping(ip_address, count=1, size=bytes_size - 8)
+
+async def tcp_ping(ctx, ip_address, bytes_size, send_str):
+    pings = tcpping.measure_latency(host=ip_address, port=80, runs=4)
+    msg = await ctx.send(content=send_str+"\n```")
+    for ping_res in pings:
+        await asyncio.sleep(ping_res/1000)
+        send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(ping_res, 2)}ms\n"
+        await msg.edit(content=send_str+"```")
+
+async def real_ping(ctx, ip_address, bytes_size, send_str):
+    res = pyping(ip_address, count=4, size=bytes_size - 8)
+    msg = await ctx.send(send_str + "```")
+    for response in res._responses:
+        time_val = float(response.time_elapsed)
+        await asyncio.sleep(delay=time_val)
+        send_str += f"{response}\n"
+        await msg.edit(content=send_str+"```")
 
 @Xanarchy.command()
-async def ping(ctx, ip_address = "1.1.1.1", bytes_size=32):
+async def ping(ctx, ip_address = "1.1.1.1", bytes_size=32, proto=None):
     await ctx.message.delete()
-
-    res = pyping(ip_address, count=1, size=bytes_size - 8)
 
     send_str = f"```\nPinging {ip_address} with {bytes_size} bytes of data:\n"
 
-    msg = await ctx.send(send_str + "```")
-    time_val = float(res._responses[0].time_elapsed)
-    await asyncio.sleep(delay=time_val)
-    send_str += f"{res._responses[0]}\n"
-    await msg.edit(content=send_str+"```")
-
-    delay = 0.4 + (1-0.4)*random.random()
-    await asyncio.sleep(delay=delay)
-    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
-    await msg.edit(content=send_str+"```")
-
-    delay = 1.5 + (3-1.5)*random.random()
-    await asyncio.sleep(delay=delay)
-    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
-    await msg.edit(content=send_str+"```")
-
-    await asyncio.sleep(delay=4.5)
-    send_str += f"Request timed out\n"
-    await msg.edit(content=send_str+"```")
+    if (proto == None):
+        await fake_ping(ip_address, bytes_size, send_str, ctx)
+    elif (proto.lower() == 'tcp'):
+        await tcp_ping(ctx, ip_address, bytes_size, send_str)
+    elif (proto.lower() == 'icmp'):
+        await real_ping(ctx, ip_address, bytes_size, send_str)
 
 @Xanarchy.command()
 async def call911(ctx, user): # b'\xfc'
@@ -2453,3 +2493,4 @@ async def _gmail_bomb(ctx): # b'\xfc'
 
 if __name__ == '__main__':
     Init()
+
