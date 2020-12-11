@@ -3,8 +3,8 @@ just a self bot
 
 to run the self bot run Xanarchy.exe
 
-commands
-https://www.exxploiting.com/commands/
+commands and Download
+https://exxploiting.github.io/Xanarchy-Self-Bot/
 
 
 

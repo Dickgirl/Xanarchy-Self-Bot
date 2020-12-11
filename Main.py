@@ -569,11 +569,6 @@ async def log(ctx, filename=None, number_of_messages=100):
             print(message)
             file_obj.write(f"[{message['author']}] {message['content']}\n")
 
-def port_callback(host, result):
-    print(host, result)
-    print
-
-
 @Xanarchy.command(aliases=['portscan', 'scan'])
 async def ports(ctx, ip = "127.0.0.1", port_range = "1-443"):
     await ctx.message.edit(content="Waiting for port scan results...")
@@ -738,29 +733,8 @@ async def methods(ctx): # b'\xfc'
     em = discord.Embed(description='Amps\nLayer3\nUDP\nTCP\nBypass')
     await ctx.send(embed=em)
 
-
 async def fake_ping(ip_address, bytes_size, send_str, ctx):
     res = pyping(ip_address, count=1, size=bytes_size - 8)
-
-    msg = await ctx.send(send_str + "```")
-    time_val = float(res._responses[0].time_elapsed)
-    await asyncio.sleep(delay=time_val)
-    send_str += f"{res._responses[0]}\n"
-    await msg.edit(content=send_str+"```")
-
-    delay = 0.4 + (1-0.4)*random.random()
-    await asyncio.sleep(delay=delay)
-    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
-    await msg.edit(content=send_str+"```")
-
-    delay = 1.5 + (3-1.5)*random.random()
-    await asyncio.sleep(delay=delay)
-    send_str += f"Reply from {ip_address}, {bytes_size} bytes in {round(delay*1000, 2)}ms\n"
-    await msg.edit(content=send_str+"```")
-
-    await asyncio.sleep(delay=4.5)
-    send_str += f"Request timed out\n"
-    await msg.edit(content=send_str+"```")
 
 async def tcp_ping(ctx, ip_address, bytes_size, send_str):
     pings = tcpping.measure_latency(host=ip_address, port=80, runs=4)
@@ -791,7 +765,6 @@ async def ping(ctx, ip_address = "1.1.1.1", bytes_size=32, proto=None):
         await tcp_ping(ctx, ip_address, bytes_size, send_str)
     elif (proto.lower() == 'icmp'):
         await real_ping(ctx, ip_address, bytes_size, send_str)
-
 
 @Xanarchy.command()
 async def call911(ctx, user): # b'\xfc'
@@ -2404,6 +2377,13 @@ async def xell(ctx): # b'\xfc'
     await ctx.message.delete()
     xell = 'FUCK THE UK'
     await ctx.send(xell)
+
+@Xanarchy.command()
+async def incon(ctx): # b'\xfc'
+    await ctx.message.delete()
+    em = discord.Embed(description='loves loli hentai', colour=discord.Colour(0xf00), title='Incon')\
+        .set_image(url="https://i.imgur.com/c9gMEi6.gif")
+    await ctx.send(embed=em)
 
 @Xanarchy.command()
 async def mys(ctx, amount: int): # b'\xfc'
