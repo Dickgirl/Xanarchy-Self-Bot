@@ -391,6 +391,12 @@ hastebin (message)
  
 log [Filename.txt] [Number Of Messages] 
 logs message in the chat the command was sent in
+
+ping an ip in discord
+ping [ip] [size] [protocol]
+
+Port Scans
+ports [ip] [port-range]
 ```
 
 
