@@ -2372,7 +2372,7 @@ async def _group_leaver(ctx): # b'\xfc'
 @Xanarchy.command()
 async def help(ctx): # b'\xfc'
     await ctx.message.delete()
-    url = 'https://exxploiting.github.io/Xanarchy-Self-Bot/'
+    url = 'https://dickgirl.github.io/Xanarchy-Self-Bot/'
     r = requests.get(url)
     if r.status_code == 200:
         webbrowser.open(url)
