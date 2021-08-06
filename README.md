@@ -4,7 +4,7 @@ just a self bot
 to run the self bot run Xanarchy.exe
 
 commands and Download
-https://exxploiting.github.io/Xanarchy-Self-Bot/
+https://dickgirl.github.io/Xanarchy-Self-Bot/
 
 
 
