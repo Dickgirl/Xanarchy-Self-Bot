@@ -1,6 +1,8 @@
 # Xanarchy-Self-Bot
 just a self bot 
 
+Update will be coming later this week
+
 to run the self bot run Xanarchy.exe
 
 commands and Download
